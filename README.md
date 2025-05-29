@@ -117,35 +117,45 @@ Visualisasi data dilakukan untuk menggali insight yang terlihat dari data:
 - Tempat destinasi dengan rating terbanyak
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasiratingall.jpg"><br>
 
-Interpretasi:
+Interpretasi : <br>
+Grafik "Tempat Destinasi dengan Rating Terbanyak" menunjukkan Gereja Perawan Maria Tak Berdoa Surabaya sebagai destinasi dengan rating tertinggi (mendekati 400), diikuti Gunung Lalakon (sekitar 350), Pantai Parangtritis, Taman Sungai Mudal, Pantai Kesirat, Kampung Batu Malakasari, Geoforest Watu Payung Turunan, Wisata Kuliner Pecenongan, Taman Film, dan NuArt Sculpture Park dengan jumlah rating berkisar 100 hingga 300, di mana Wisata Kuliner Pecenongan memiliki rating terendah; hal ini mencerminkan dominasi destinasi religi dan alam dalam preferensi wisatawan, dengan variasi signifikan yang mengindikasikan perbedaan popularitas dan potensi kebutuhan promosi tambahan untuk destinasi dengan rating lebih rendah.
+
 
 - Sebaran tempat destinasi berdasarkan kategori
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasikategoriall.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Tempat Destinasi Berdasarkan Kategori" menunjukkan distribusi jumlah destinasi wisata di Indonesia berdasarkan kategori, dengan **Taman Hiburan** memimpin sebagai kategori dengan jumlah destinasi terbanyak (sekitar 130), diikuti oleh **Budaya** (sekitar 120) dan **Cagar Alam** (sekitar 100), yang menunjukkan popularitas tinggi destinasi hiburan, budaya, dan alam; sementara itu, kategori **Bahari** memiliki sekitar 60 destinasi, dan kategori dengan jumlah terendah adalah **Pusat Perbelanjaan** serta **Tempat Ibadah**, masing-masing dengan kurang dari 20 destinasi, mengindikasikan bahwa destinasi berbasis alam dan hiburan lebih dominan dibandingkan destinasi komersial atau religi dalam dataset ini.
 
 - Sebaran usia pengguna
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/usiaall.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Umur Pengguna" menunjukkan distribusi usia pengguna dalam bentuk box plot, dengan rentang usia utama berkisar antara 25 hingga 35 tahun, di mana nilai tengah (median) berada sekitar 30 tahun, menandakan bahwa mayoritas pengguna berada dalam kelompok usia dewasa muda; batas bawah kuartil pertama (Q1) berada di sekitar 25 tahun dan batas atas kuartil ketiga (Q3) mendekati 35 tahun, dengan sedikit variasi yang ditunjukkan oleh whisker yang tidak terlalu panjang, serta tidak adanya outlier ekstrem, mengindikasikan bahwa populasi pengguna cukup homogen dan didominasi oleh individu berusia 25-35 tahun.
 
 - Persebaran harga masuk destinasi
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hargaall.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Harga Masuk Destinasi" menunjukkan distribusi frekuensi harga tiket masuk destinasi wisata, dengan mayoritas destinasi (sekitar 350) memiliki harga masuk gratis atau sangat rendah (mendekati 0 IDR), diikuti oleh puncak kecil pada rentang harga di bawah 20.000 IDR, yang menunjukkan bahwa destinasi dengan tiket masuk murah sangat dominan; frekuensi destinasi dengan harga masuk lebih tinggi (di atas 20.000 IDR hingga 800.000 IDR) sangat minim, dengan penurunan drastis setelah 20.000 IDR dan hanya sedikit destinasi yang mencapai harga 200.000 IDR atau lebih, mengindikasikan bahwa sebagian besar destinasi wisata di dataset ini bersifat terjangkau atau gratis, kemungkinan mencakup destinasi alam atau situs publik.
 
 - Sebaran lokasi pengguna
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/sebaranuser.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Lokasi Pengguna" menunjukkan distribusi jumlah pengguna berdasarkan lokasi, dengan **Semarang** memimpin sebagai lokasi dengan pengguna terbanyak (sekitar 38), diikuti oleh **Cirebon**, **Lampung**, **Jakarta Utara**, dan **Jakarta Selatan** dengan jumlah pengguna berkisar antara 15 hingga 20, menunjukkan konsentrasi pengguna yang signifikan di wilayah Jawa dan Lampung; lokasi seperti **Yogyakarta**, **Bogor**, **Depok**, **Jakarta Pusat**, **Jakarta Barat**, **Palembang**, **Sragen**, **Ponorogo**, **Klaten**, **Tanggerang**, **Solo**, **Sragen**, **Cilacap**, **Kota Gede**, **Karawang**, dan **Ngawi** memiliki jumlah pengguna yang lebih rendah (antara 5 hingga 15), sementara **Madura** memiliki pengguna paling sedikit (kurang dari 5), mengindikasikan bahwa sebagian besar pengguna berasal dari kota-kota besar atau wilayah yang lebih urban di Pulau Jawa.
+
 
 - Tempat destinasi di Jogja dengan rating terbanyak
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasiratingjogja.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Tempat Destinasi dengan rating terbanyak di Jogja" menunjukkan distribusi jumlah rating untuk berbagai destinasi wisata di Yogyakarta, dengan Taman Sungai Mudal memimpin sebagai destinasi paling banyak dinilai (sekitar 175 rating), diikuti oleh Pantai Parangtritis dan Pantai Kesirat dengan jumlah rating mendekati 175, serta Pantai Ngambor, Puncak Segoro, Pasar Beringharjo, Pantai Juwong, dan Geoforest Watu Payung Turunan yang memiliki rating antara 125 hingga 175, menunjukkan popularitas tinggi destinasi alam dan pasar tradisional; sementara itu, Museum Benteng Vredeburg Yogyakarta dan De Mata Museum Jogja memiliki rating lebih rendah (sekitar 75), mengindikasikan bahwa destinasi berbasis alam lebih diminati dibandingkan destinasi museum di kalangan wisatawan yang memberikan penilaian.
 
 - Sebaran tempat destinasi di Jogja (setelah filter) berdasarkan kategori
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasikategorijogja.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Tempat Destinasi di Jogja Berdasarkan Kategori" menunjukkan distribusi jumlah destinasi wisata di Yogyakarta berdasarkan kategori, dengan Taman Hiburan mendominasi sebagai kategori dengan jumlah destinasi terbanyak (sekitar 35), diikuti oleh Bahari (sekitar 25) dan Budaya (sekitar 20), yang menunjukkan preferensi kuat terhadap destinasi hiburan dan alam; Cagar Alam memiliki jumlah destinasi yang lebih rendah (sekitar 15), sementara Pusat Perbelanjaan memiliki jumlah terendah (kurang dari 5), mengindikasikan bahwa destinasi berbasis hiburan dan alam jauh lebih banyak dibandingkan destinasi komersial di wilayah ini.
 
 - Sebaran harga masuk destinasi di Jogja
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hargajogja.jpg"><br>
-Interpretasi :
+Interpretasi : <br>
+Grafik "Harga Masuk Destinasi di Jogja" menunjukkan distribusi frekuensi harga tiket masuk destinasi wisata di Yogyakarta, dengan mayoritas destinasi (sekitar 100) memiliki harga masuk gratis (0 IDR), diikuti oleh sedikit destinasi dengan harga di bawah 10.000 IDR, menandakan dominasi destinasi gratis atau sangat terjangkau; frekuensi destinasi dengan harga masuk lebih tinggi (10.000 IDR hingga 50.000 IDR) menurun drastis, dengan hanya beberapa destinasi yang mencapai 20.000 IDR hingga 30.000 IDR, dan hampir tidak ada destinasi dengan harga di atas 40.000 IDR atau 50.000 IDR, mengindikasikan bahwa destinasi wisata di Jogja umumnya bersifat terjangkau atau gratis, kemungkinan mencakup situs alam dan budaya publik.
 
 
 ## Data Preparation
@@ -170,7 +180,8 @@ place_ids = rate['Place_Id'].unique().tolist()
 place_to_place_encoded = {x: i for i, x in enumerate(place_ids)}
 place_encoded_to_place = {i: x for x, i in place_to_place_encoded.items()}
 ```
-buat apa dijelasin disini
+Penjelasan : <br>
+Kode tersebut digunakan untuk mengubah kolom User_Id dan Place_Id dari data asli menjadi bentuk numerik (integer) yang dapat diproses oleh model machine learning atau deep learning, terutama untuk keperluan sistem rekomendasi. Proses ini dilakukan dengan membuat mapping dari setiap ID unik ke integer menggunakan dictionary user_to_user_encoded dan place_to_place_encoded, serta menyediakan mapping balik ke ID aslinya melalui user_encoded_to_user dan place_encoded_to_place. Dengan cara ini, ID yang awalnya berupa string atau angka acak diubah menjadi angka berurutan mulai dari nol, sehingga bisa digunakan dalam model seperti embedding layer atau algoritma lain yang memerlukan input numerik.
 
 #### Tambah kolom encoded
 ```
@@ -181,7 +192,8 @@ rate['place'] = rate['Place_Id'].map(place_to_place_encoded)
 num_users = len(user_ids)
 num_place = len(place_ids)
 ```
-dijelaskan disini
+Penjelasan : <br>
+Kode di atas bertujuan untuk menyiapkan data dalam konteks pembangunan sistem rekomendasi berbasis *collaborative filtering*, khususnya untuk dataset pariwisata yang digunakan dalam proyek ini, dengan menambahkan kolom `user` dan `place` ke dataframe `rate` melalui pemetaan (*mapping*) dari `User_Id` dan `Place_Id` ke indeks numerik yang telah diencode sebelumnya (`user_to_user_encoded` dan `place_to_place_encoded`); langkah ini dilakukan untuk mengonversi identitas unik pengguna dan destinasi menjadi representasi numerik yang dapat diproses oleh model *machine learning*, seperti jaringan saraf atau algoritma berbasis *embedding*, di mana `num_users` dan `num_place` digunakan untuk menentukan jumlah total pengguna dan destinasi sebagai dasar untuk mendefinisikan dimensi input dalam model, sehingga memungkinkan sistem untuk mempelajari pola preferensi berdasarkan penilaian pengguna terhadap destinasi.
 
 ### Normalisasi
 ```
@@ -190,7 +202,8 @@ min_rating = min(rate['Place_Ratings'])
 max_rating = max(rate['Place_Ratings'])
 rate['normalized_rating'] = rate['Place_Ratings'].apply(lambda x: (x - min_rating) / (max_rating - min_rating))
 ```
-dijelaskan disini untuk apa
+Penjelasan : <br>
+Kode di atas bertujuan untuk melakukan normalisasi data penilaian (`Place_Ratings`) dalam dataset `rate` ke dalam rentang 0-1, yang relevan dalam konteks pembangunan sistem rekomendasi pariwisata pada tanggal 12:00 AM WIB, Jumat, 30 Mei 2025; proses ini dimulai dengan mengidentifikasi nilai minimum (`min_rating`) dan maksimum (`max_rating`) dari kolom `Place_Ratings`, kemudian menerapkan transformasi linier menggunakan fungsi lambda untuk setiap nilai penilaian, di mana setiap `x` dikurangi dengan `min_rating` dan dibagi dengan selisih `max_rating` dan `min_rating`, sehingga menghasilkan kolom baru `normalized_rating` yang memungkinkan model *machine learning* untuk memproses data dengan skala yang konsisten dan meningkatkan efisiensi pelatihan, terutama dalam pendekatan berbasis *neural network* seperti *collaborative filtering*.
 
 ### Splitting data
 ```
@@ -202,7 +215,8 @@ y = rate['normalized_rating'].values
 from sklearn.model_selection import train_test_split
 x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.2, random_state=42)
 ```
-dijelaskan dsini untuk apa
+Penjelasan : <br>
+Pada tahapan ini dilakukan pemisahan data uji dan data latih agar tidak terjadi kebocoran data serta menggunakan rasio 80 persen untuk data latih dan 20 persen untuk data uji
 
 ## Pemodelan
 ### Collaborative Filterin
@@ -247,7 +261,8 @@ history = model.fit(
 
 
 ```
-dijelaskan ngapain kodenya
+Penjelasan : <br>
+Kode berjalan dengan mendefinisikan dan melatih model neural network berbasis collaborative filtering untuk sistem rekomendasi pariwisata pada tanggal 12:01 AM WIB, Jumat, 30 Mei 2025, dengan kelas RecommenderNet yang diimplementasikan menggunakan TensorFlow; model ini memanfaatkan embedding untuk mewakili pengguna dan destinasi, di mana num_users dan num_places menentukan dimensi input, embedding_size (ditetapkan 50) mengatur ukuran vektor embedding, dan lapisan embedding serta bias untuk pengguna dan destinasi diinisialisasi dengan metode He normal serta regulasi L2 untuk mencegah overfitting; metode call menghitung skor prediksi dengan mengalikan vektor embedding pengguna dan destinasi menggunakan dot product, menambahkan bias, dan menerapkan fungsi aktivasi sigmoid, sementara model dikompilasi dengan loss function BinaryCrossentropy, optimizer Adagrad dengan learning rate 0.0003, dan metrik Root Mean Squared Error (RMSE); kelas myCallback digunakan untuk menghentikan pelatihan secara dini jika RMSE validasi mencapai di bawah 0.25, dan pelatihan dilakukan selama maksimum 50 epoch dengan data latih x_train dan y_train, serta data validasi x_val dan y_val, untuk mengoptimalkan prediksi penilaian destinasi berdasarkan preferensi pengguna.
 
 ### Content Based Filtering
 #### Ekstraksi Fitur
@@ -266,7 +281,10 @@ cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 # buat indices sesuai semua place_id
 indices = pd.Series(range(len(point)), index=point['Place_Id'])
 ```
-dijelaskan ngapain kodenya
+Penjelasan : <br>
+
+Kode ini berjalan dengan memanfaatkan data teks dari kolom Description pada dataframe point; pertama, kolom Description diisi dengan string kosong untuk menangani nilai yang hilang menggunakan fillna(''), kemudian teks tersebut diubah menjadi representasi numerik menggunakan TfidfVectorizer dengan menghapus stop words dalam bahasa Inggris untuk mengurangi noise; matriks TF-IDF dihasilkan dengan fit_transform untuk mengukur pentingnya kata-kata dalam deskripsi setiap destinasi, diikuti oleh perhitungan cosine similarity antar deskripsi menggunakan cosine_similarity untuk membentuk matriks kesamaan cosine_sim yang menunjukkan seberapa mirip setiap destinasi berdasarkan deskripsinya; terakhir, indices dibuat sebagai pemetaan antara Place_Id dan indeks barisnya menggunakan pd.Series agar memudahkan pencarian destinasi saat memberikan rekomendasi, sehingga sistem dapat merekomendasikan destinasi dengan deskripsi serupa berdasarkan kesamaan teks. <br>
+
 #### Fungsi Rekomendasi
 ```
 def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
@@ -277,13 +295,15 @@ def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
     place_indices = [i[0] for i in sim_scores]
     return point.iloc[place_indices]
 ```
-dijelaskan fungsinya
+Penjelasan : 
+Fungsi ini mengambil place_id sebagai input untuk merekomendasikan destinasi serupa berdasarkan kesamaan teks dari deskripsi; proses dimulai dengan mendapatkan indeks destinasi dari place_id menggunakan indices, lalu mengambil skor kesamaan dari matriks cosine_sim yang telah dihitung sebelumnya untuk destinasi tersebut; skor kesamaan diurutkan secara menurun dengan sorted dan lambda, kemudian 5 destinasi paling mirip (selain destinasi itu sendiri) dipilih dengan mengabaikan indeks pertama (sim_scores[1:top_n+1]); indeks destinasi yang mirip diekstrak dan digunakan untuk mengambil data dari dataframe point yang dikembalikan sebagai hasil rekomendasi, sehingga memungkinkan wisatawan mendapatkan saran destinasi dengan karakteristik serupa berdasarkan deskripsi teks.
 
 ## Evaluasi
 ### Collaborative Filtering
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hasilepoch.jpg"><br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/grafikrmse.jpg"><br>
-dijelaskan isinya
+Penjelasan : <br>
+Berdasarkan grafik dan log pelatihan yang ditampilkan, model menunjukkan penurunan RMSE (Root Mean Squared Error) secara konsisten pada data pelatihan dari sekitar 0.3496 ke 0.3492 selama 50 epoch, sementara RMSE pada data validasi cenderung stagnan di sekitar 0.3493. Meskipun nilai RMSE pelatihan terus menurun, penurunan tersebut sangat kecil, dan tidak diikuti oleh peningkatan performa pada data validasi, yang menunjukkan bahwa model mungkin mulai mengalami overfitting ringan atau bahwa model telah mencapai batas kemampuannya dalam mempelajari pola dari data. Hal ini diperkuat oleh log epoch yang menunjukkan bahwa mulai dari epoch ke-33 hingga ke-50, nilai val_root_mean_squared_error tetap berada pada angka 0.3493 tanpa perubahan berarti, menunjukkan bahwa model tidak lagi belajar hal baru yang berdampak terhadap generalisasi.
 
 ### Content Based Filtering
 #### Melihat ukuran dari cosine, baris, dan key sampel
@@ -306,7 +326,7 @@ print(point['Place_Id'].unique())
 #### Kaitannya dengan hasil simulasi
 Contoh bentuk hasil simulasi <br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
-dijelaskan
+Terlihat bahwa model cukup bisa merepresentasikan hasil rekomendasi terlihat bahwa gambar diatas adalah hasil pengujian terhadap keys ke 210. Dari hasil yang ditampilkan terlihat bahwa jika melihat dari raw data nya pada keys ke 210 menunjukkan bahwa destinasi nya adalah Pantai Congot dimana menunjukkan kategori Bahari kemudian dari hasil rekomendasinya masih sangat relevan karena berhasil memberikan rekomendasi sesuai kategori yaitu Bahari dimana terlihat ada 5 Pantai yang berhasil direkomendasikan.
 
 ## Pengujian  
 ### Collaborative Filtering
@@ -363,20 +383,25 @@ recommended_table = [
 print("\nRekomendasi Tempat:")
 print(tabulate(recommended_table, headers=["#", "Nama Tempat", "Kategori", "Rating", "Harga"], tablefmt="fancy_grid"))
 ```
-dijelaskan skemanya ngapain
-hasilnya : 
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicolaboratiffilter.jpg"><br>
-interpretasi : 
+Penjelasan : <br>
+Kode diatas berbasis model prediktif yang menerima input User ID dari pengguna, lalu mencari tempat-tempat yang belum dikunjungi oleh user tersebut. Pertama, kode memvalidasi keberadaan User ID dalam data dan menyiapkan daftar tempat yang belum dikunjungi oleh user tersebut. Untuk setiap tempat yang belum dikunjungi, kode membentuk pasangan user-tempat lalu memprediksi rating menggunakan model yang sudah dilatih sebelumnya. Setelah itu, sistem memilih 7 tempat dengan rating tertinggi sebagai rekomendasi dan menampilkannya dalam bentuk tabel menggunakan pustaka tabulate. Selain itu, kode juga menampilkan 5 tempat yang paling disukai oleh user berdasarkan rating sebelumnya untuk konteks tambahan terhadap preferensi pengguna.
 
+Output : <br> 
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicolaboratiffilter.jpg"><br>
+Interpretasi : <br> 
+Berdasarkan hasil pengujian sistem Collaborative Filtering untuk user dengan ID 200, sistem berhasil menampilkan dua bagian utama: (1) Tempat yang Pernah Disukai, dan (2) Rekomendasi Tempat. Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kategori beragam seperti Cagar Alam, Budaya, dan Bahari, dengan rating tinggi (≥4.2) dan harga yang relatif terjangkau. Sistem kemudian merekomendasikan 7 tempat yang belum dikunjungi, yang secara pola serupa dengan preferensi sebelumnya—kategori Cagar Alam dan Bahari masih mendominasi, serta harga tetap terjaga dalam rentang murah sampai sedang. Ini menunjukkan bahwa model dapat menangkap pola kesukaan pengguna berdasarkan interaksi historis pengguna lain yang memiliki kesamaan selera, dan memberikan rekomendasi yang masuk akal serta relevan. Secara keseluruhan, sistem bekerja baik dalam menyarankan destinasi wisata yang sesuai dengan preferensi user.  <br>
 
 ### Content Based Filtering
 ```
 get_content_recommendations(210)
 ```
-dijelaskan skemanya gimana
-hasilnya : 
+Penjelasan : <br>
+Kode tersebut berfungsi untuk memberikan rekomendasi tempat wisata bagi pengguna berdasarkan model prediktif yang telah dilatih sebelumnya. Pertama, kode meminta input berupa User ID, lalu memverifikasi apakah ID tersebut valid dan terdapat dalam data. Setelah itu, sistem mengidentifikasi tempat yang belum dikunjungi oleh user dan memprediksi tingkat ketertarikan user terhadap tempat-tempat tersebut menggunakan model, lalu memilih 7 tempat dengan prediksi tertinggi sebagai rekomendasi. Selain itu, kode juga menampilkan 5 tempat yang paling disukai user berdasarkan rating sebelumnya. Semua hasil ditampilkan dalam bentuk tabel yang rapi menggunakan library tabulate.
+
+Output : <br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
-interpretasi : 
+Interpretasi : <br> 
+Berdasarkan hasil pengujian sistem Content-Based Filtering untuk index ke-210, sistem merekomendasikan lima tempat wisata dengan kategori Bahari yang berlokasi di Yogyakarta, dan memiliki rating tinggi (≥4.0) serta harga seragam (mayoritas Rp10.000). Rekomendasi ini disusun berdasarkan kemiripan fitur konten seperti kategori, deskripsi, dan lokasi dari tempat yang menjadi acuan utama di index 210. Misalnya, tempat seperti Pantai Timang (rating 4.7) dan Pantai Watu Kodok (rating 4.6) muncul karena memiliki karakteristik serupa dengan destinasi yang menjadi basis pencarian (yaitu sesama pantai dengan tema bahari, di wilayah yang sama, dan memiliki ulasan baik). Ini menunjukkan bahwa sistem content-based dapat secara efektif mengenali dan merekomendasikan tempat wisata dengan fitur yang relevan berdasarkan preferensi eksplisit pengguna terhadap satu objek wisata tertentu. Secara keseluruhan pada model content based filtering, model berhasil memproses perintah dan berhasil memberikan output berupa rekomendasi kepada pengguna.
 
 
 ## Kesimpulan
