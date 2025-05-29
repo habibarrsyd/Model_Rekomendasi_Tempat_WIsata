@@ -46,7 +46,7 @@ Link : https://www.kaggle.com/datasets/aprabowo/indonesia-tourism-destination
 #### Tipe dan Bentuk Data 
 Proyek ini menggunakan tiga dataset dari dataset Destinasi Wisata Indonesia di Kaggle:
 
-- tourism_rating.csv: <br>
+- tourism_rating.csv:<br>
 Berisi penilaian pengguna untuk destinasi wisata. <br>
 Kolom: User_Id, Place_Id, Place_Ratings. <br>
 Ukuran: 10.000 entri awal, dengan 79 duplikat dihapus. <br>
@@ -63,41 +63,31 @@ Kolom: User_Id, atribut pengguna tambahan.
 Deskripsi Variabel
 Dataset memiliki 5 variabel dengan keterangan sebagai berikut:
 
-- tourism_rating.csv:
-User_Id: Pengidentifikasi unik untuk pengguna.
+- tourism_rating.csv:<br>
+User_Id: Pengidentifikasi unik untuk pengguna.<br>
 
-Place_Id: Pengidentifikasi unik untuk destinasi wisata.
+Place_Id: Pengidentifikasi unik untuk destinasi wisata.<br>
 
-Place_Ratings: Penilaian yang diberikan pengguna untuk destinasi (skala: 1–5).
+Place_Ratings: Penilaian yang diberikan pengguna untuk destinasi (skala: 1–5).<br>
 <img src = "https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/bentukratekolom.jpg"><br>
 
-- tourism_with_id.csv:
+- tourism_with_id.csv: <br>
 
-Place_Id: Pengidentifikasi unik untuk destinasi.
-
-Place_Name: Nama destinasi.
-
-Description: Deskripsi singkat destinasi.
-
-Category: Jenis destinasi (misalnya, Bahari untuk pantai).
-
-City: Lokasi destinasi.
-
-Price: Harga tiket masuk (dalam IDR).
-
-Rating: Rata-rata penilaian destinasi.
-
-Time_Minutes: Estimasi durasi kunjungan (beberapa nilai hilang).
-
-Coordinate, Lat, Long: Koordinat geografis.
+Place_Id: Pengidentifikasi unik untuk destinasi. <br>
+Place_Name: Nama destinasi. <br>
+Description: Deskripsi singkat destinasi. <br>
+Category: Jenis destinasi (misalnya, Bahari untuk pantai). <br>
+City: Lokasi destinasi. <br>
+Price: Harga tiket masuk (dalam IDR). <br>
+Rating: Rata-rata penilaian destinasi. <br>
+Time_Minutes: Estimasi durasi kunjungan (beberapa nilai hilang).<br>
+Coordinate, Lat, Long: Koordinat geografis. <br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/poinkolom.jpg"><br>
 
 - user.csv: <br>
-User_Id: Id unik pengguna
-
-Location : domisili pengguna
-
-Age : Usia Pengguna
+User_Id: Id unik pengguna <br>
+Location : domisili pengguna <br>
+Age : Usia Pengguna <br>
 
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/userkolom.jpg"><br>
 
@@ -262,7 +252,7 @@ history = model.fit(
 
 ```
 Penjelasan : <br>
-Kode berjalan dengan mendefinisikan dan melatih model neural network berbasis collaborative filtering untuk sistem rekomendasi pariwisata pada tanggal 12:01 AM WIB, Jumat, 30 Mei 2025, dengan kelas RecommenderNet yang diimplementasikan menggunakan TensorFlow; model ini memanfaatkan embedding untuk mewakili pengguna dan destinasi, di mana num_users dan num_places menentukan dimensi input, embedding_size (ditetapkan 50) mengatur ukuran vektor embedding, dan lapisan embedding serta bias untuk pengguna dan destinasi diinisialisasi dengan metode He normal serta regulasi L2 untuk mencegah overfitting; metode call menghitung skor prediksi dengan mengalikan vektor embedding pengguna dan destinasi menggunakan dot product, menambahkan bias, dan menerapkan fungsi aktivasi sigmoid, sementara model dikompilasi dengan loss function BinaryCrossentropy, optimizer Adagrad dengan learning rate 0.0003, dan metrik Root Mean Squared Error (RMSE); kelas myCallback digunakan untuk menghentikan pelatihan secara dini jika RMSE validasi mencapai di bawah 0.25, dan pelatihan dilakukan selama maksimum 50 epoch dengan data latih x_train dan y_train, serta data validasi x_val dan y_val, untuk mengoptimalkan prediksi penilaian destinasi berdasarkan preferensi pengguna.
+Kode berjalan dengan mendefinisikan dan melatih model neural network berbasis collaborative filtering untuk sistem rekomendasi pariwisata dengan kelas RecommenderNet yang diimplementasikan menggunakan TensorFlow; model ini memanfaatkan embedding untuk mewakili pengguna dan destinasi, di mana num_users dan num_places menentukan dimensi input, embedding_size (ditetapkan 50) mengatur ukuran vektor embedding, dan lapisan embedding serta bias untuk pengguna dan destinasi diinisialisasi dengan metode He normal serta regulasi L2 untuk mencegah overfitting; metode call menghitung skor prediksi dengan mengalikan vektor embedding pengguna dan destinasi menggunakan dot product, menambahkan bias, dan menerapkan fungsi aktivasi sigmoid, sementara model dikompilasi dengan loss function BinaryCrossentropy, optimizer Adagrad dengan learning rate 0.0003, dan metrik Root Mean Squared Error (RMSE); kelas myCallback digunakan untuk menghentikan pelatihan secara dini jika RMSE validasi mencapai di bawah 0.25, dan pelatihan dilakukan selama maksimum 50 epoch dengan data latih x_train dan y_train, serta data validasi x_val dan y_val, untuk mengoptimalkan prediksi penilaian destinasi berdasarkan preferensi pengguna.
 
 ### Content Based Filtering
 #### Ekstraksi Fitur
@@ -295,8 +285,8 @@ def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
     place_indices = [i[0] for i in sim_scores]
     return point.iloc[place_indices]
 ```
-Penjelasan : 
-Fungsi ini mengambil place_id sebagai input untuk merekomendasikan destinasi serupa berdasarkan kesamaan teks dari deskripsi; proses dimulai dengan mendapatkan indeks destinasi dari place_id menggunakan indices, lalu mengambil skor kesamaan dari matriks cosine_sim yang telah dihitung sebelumnya untuk destinasi tersebut; skor kesamaan diurutkan secara menurun dengan sorted dan lambda, kemudian 5 destinasi paling mirip (selain destinasi itu sendiri) dipilih dengan mengabaikan indeks pertama (sim_scores[1:top_n+1]); indeks destinasi yang mirip diekstrak dan digunakan untuk mengambil data dari dataframe point yang dikembalikan sebagai hasil rekomendasi, sehingga memungkinkan wisatawan mendapatkan saran destinasi dengan karakteristik serupa berdasarkan deskripsi teks.
+Penjelasan : <br>
+Fungsi ini mengambil place_id sebagai input untuk merekomendasikan destinasi serupa berdasarkan kesamaan teks dari deskripsi; proses dimulai dengan mendapatkan indeks destinasi dari place_id menggunakan indices, lalu mengambil skor kesamaan dari matriks cosine_sim yang telah dihitung sebelumnya untuk destinasi tersebut; skor kesamaan diurutkan secara menurun dengan sorted dan lambda, kemudian 5 destinasi paling mirip (selain destinasi itu sendiri) dipilih dengan mengabaikan indeks pertama (sim_scores[1:top_n+1]); indeks destinasi yang mirip diekstrak dan digunakan untuk mengambil data dari dataframe point yang dikembalikan sebagai hasil rekomendasi, sehingga memungkinkan wisatawan mendapatkan saran destinasi dengan karakteristik serupa berdasarkan deskripsi teks. <br>
 
 ## Evaluasi
 ### Collaborative Filtering
