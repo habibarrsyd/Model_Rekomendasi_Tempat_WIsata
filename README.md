@@ -88,7 +88,7 @@ Location : domisili pengguna
 Age : Usia Pengguna
 <img>
 
-### Menangani Missing Value dan Duplicate Data
+### Menangani Missing Value 
 Pada tahap ini, dataset diperiksa untuk memastikan tidak ada nilai yang hilang (missing values) Berdasarkan analisis awal:
 <img><br>
 Tidak ada nilai yang hilang pada dataset (dikonfirmasi dengan data.isnull().sum()).
@@ -124,60 +124,232 @@ Interpretasi:
 ## Data Preparation
 ### Feature Engineering:
 #### Dilakukan filtering pada dataset untuk mengambil data pada daerah Jogja saja.
-<img>
+```
+# Filter destinasi hanya dari Yogyakarta
+point = point[point['City'] == 'Yogyakarta']
+rate = pd.merge(rate, point[['Place_Id']], how='right', on='Place_Id')
+```
 
-Data yang terbentuk : 
+
+Bentuk data yang terbentuk : 
 <img src="https://github.com/habibarrsyd/Predictive_Analysis_Return_Stock_BMRI_Prediction-/blob/2424506a29e46ba9f56a72f940f261567d855ec5/img/data_after_fenginering_predictiveanalysis.jpg"><br>
 
 #### Maping Id
-<code>
+```
+# Membuat mapping ID
+user_ids = rate['User_Id'].unique().tolist()
+user_to_user_encoded = {x: i for i, x in enumerate(user_ids)}
+user_encoded_to_user = {i: x for x, i in user_to_user_encoded.items()}
+
+place_ids = rate['Place_Id'].unique().tolist()
+place_to_place_encoded = {x: i for i, x in enumerate(place_ids)}
+place_encoded_to_place = {i: x for x, i in place_to_place_encoded.items()}
+```
 buat apa dijelasin disini
 
 #### Tambah kolom encoded
-<code>
+```
+# Tambahkan kolom encoded
+rate['user'] = rate['User_Id'].map(user_to_user_encoded)
+rate['place'] = rate['Place_Id'].map(place_to_place_encoded)
+
+num_users = len(user_ids)
+num_place = len(place_ids)
+```
 dijelaskan disini
 
 ### Normalisasi
-<code>
+```
+# Normalisasi rating ke 0-1
+min_rating = min(rate['Place_Ratings'])
+max_rating = max(rate['Place_Ratings'])
+rate['normalized_rating'] = rate['Place_Ratings'].apply(lambda x: (x - min_rating) / (max_rating - min_rating))
+```
 dijelaskan disini untuk apa
 
 ### Splitting data
-<code>
+```
+# Siapkan data training
+x = rate[['user', 'place']].values
+y = rate['normalized_rating'].values
+
+# Split train/val
+from sklearn.model_selection import train_test_split
+x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.2, random_state=42)
+```
 dijelaskan dsini untuk apa
 
 ## Pemodelan
-### Collaborative Filtering
-<code>
-    dijelaskan ngapain kodenya
+### Collaborative Filterin
+```
+class RecommenderNet(tf.keras.Model):
+    def __init__(self, num_users, num_places, embedding_size, **kwargs):
+        super(RecommenderNet, self).__init__(**kwargs)
+        self.user_embedding = layers.Embedding(num_users, embedding_size, embeddings_initializer='he_normal',
+                                               embeddings_regularizer=keras.regularizers.l2(1e-6))
+        self.user_bias = layers.Embedding(num_users, 1)
+        self.places_embedding = layers.Embedding(num_places, embedding_size, embeddings_initializer='he_normal',
+                                                 embeddings_regularizer=keras.regularizers.l2(1e-6))
+        self.places_bias = layers.Embedding(num_places, 1)
+
+    def call(self, inputs):
+        user_vector = self.user_embedding(inputs[:, 0])
+        user_bias = self.user_bias(inputs[:, 0])
+        places_vector = self.places_embedding(inputs[:, 1])
+        places_bias = self.places_bias(inputs[:, 1])
+        dot_user_places = tf.reduce_sum(user_vector * places_vector, axis=1, keepdims=True)
+        x = dot_user_places + user_bias + places_bias
+        return tf.nn.sigmoid(x)
+
+model = RecommenderNet(num_users, num_place, 50)
+model.compile(loss=tf.keras.losses.BinaryCrossentropy(),
+              optimizer=keras.optimizers.Adagrad(learning_rate=0.0003),
+              metrics=[tf.keras.metrics.RootMeanSquaredError()])
+
+class myCallback(tf.keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs={}):
+        if logs.get('val_root_mean_squared_error') < 0.25:
+            print('\nRoot metrics validasi sudah sesuai harapan')
+            self.model.stop_training = True
+
+history = model.fit(
+    x=x_train,
+    y=y_train,
+    epochs=50,
+    validation_data=(x_val, y_val),
+    callbacks=[myCallback()]
+)
+
+
+```
+dijelaskan ngapain kodenya
 
 ### Content Based Filtering
-<code>
-    dijelaskan ngapain kodenya
+#### Ekstraksi Fitur
+```
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+# Misal kolom fitur text untuk tiap tempat ada di 'Description' atau 'Features'
+descriptions = point['Description'].fillna('')  # sesuaikan kolom yang dipakai
+
+tfidf = TfidfVectorizer(stop_words='english')
+tfidf_matrix = tfidf.fit_transform(descriptions)
+
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
+# buat indices sesuai semua place_id
+indices = pd.Series(range(len(point)), index=point['Place_Id'])
+```
+dijelaskan ngapain kodenya
+#### Fungsi Rekomendasi
+```
+def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
+    idx = indices[place_id]
+    sim_scores = list(enumerate(cosine_sim[idx]))
+    sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
+    sim_scores = sim_scores[1:top_n+1]  # ambil 5 tempat mirip (selain dirinya sendiri)
+    place_indices = [i[0] for i in sim_scores]
+    return point.iloc[place_indices]
+```
+dijelaskan fungsinya
 
 ## Evaluasi
 ### Collaborative Filtering
-<code>
-    dijelaskan isinya
-
-### Content Based Filtering
-<code>
+<img>
 dijelaskan isinya
 
+### Content Based Filtering
+#### Melihat ukuran dari cosine, baris, dan key sampel
+```
+print(f"Ukuran cosine_sim: {cosine_sim.shape}")
+print(f"Jumlah baris point: {len(point)}")
+print(f"Indices keys example: {list(indices.keys())[:10]}")
+print(f"indices[{179}]: {indices.get(179)}")
+```
+Output : 
+<img>
+
+#### Melihat key yang dapat diujikan
+```
+print(point['Place_Id'].unique())
+```
+#### Bentuk data yang dapat diujikan
+<img>
+
+#### Kaitannya dengan hasil simulasi
+dijelaskan
 
 ## Pengujian  
 ### Collaborative Filtering
-<code>
+```
+from tabulate import tabulate
+import numpy as np
+
+# Input user ID secara manual
+try:
+    user_id = int(input("Masukkan User ID: "))
+except ValueError:
+    print("User ID harus berupa angka.")
+    exit()
+
+# Proses rekomendasi
+encoded_user_id = user_to_user_encoded.get(user_id)
+
+# Validasi jika user ID tidak ditemukan
+if encoded_user_id is None:
+    print(f"User ID {user_id} tidak ditemukan dalam data.")
+    exit()
+
+place_visited_by_user = rate[rate['User_Id'] == user_id]
+place_not_visited = list(set(place_ids) - set(place_visited_by_user['Place_Id'].values))
+place_not_visited_encoded = [place_to_place_encoded.get(x) for x in place_not_visited]
+
+user_place_array = np.array([[encoded_user_id, place] for place in place_not_visited_encoded])
+ratings = model.predict(user_place_array).flatten()
+top_ratings_indices = ratings.argsort()[-7:][::-1]
+recommended_place_ids = [place_encoded_to_place[place_not_visited_encoded[x]] for x in top_ratings_indices]
+
+print('=' * 50)
+print(f"Rekomendasi Tempat Wisata untuk User {user_id}")
+print('=' * 50)
+
+# Top 5 tempat yang pernah disukai
+top_place_user = place_visited_by_user.sort_values(
+    by='Place_Ratings', ascending=False).head(5)['Place_Id'].values
+place_df_rows = point[point['Place_Id'].isin(top_place_user)]
+
+top_visited_table = [
+    [row['Place_Name'], row['Category'], row['Rating'], row['Price']]
+    for _, row in place_df_rows.iterrows()
+]
+print("\nTempat yang Pernah Disukai:")
+print(tabulate(top_visited_table, headers=["Nama Tempat", "Kategori", "Rating", "Harga"], tablefmt="fancy_grid"))
+
+# Rekomendasi 7 tempat
+recommended_place = point[point['Place_Id'].isin(recommended_place_ids)]
+recommended_table = [
+    [i + 1, row['Place_Name'], row['Category'], row['Rating'], row['Price']]
+    for i, (_, row) in enumerate(recommended_place.iterrows())
+]
+print("\nRekomendasi Tempat:")
+print(tabulate(recommended_table, headers=["#", "Nama Tempat", "Kategori", "Rating", "Harga"], tablefmt="fancy_grid"))
+```
 dijelaskan skemanya ngapain
-    hasilnya : 
+hasilnya : 
 <pict></pict>
-interpretasi
+interpretasi : 
+
 
 ### Content Based Filtering
-<code>
+```
+get_content_recommendations(210)
+```
 dijelaskan skemanya gimana
 hasilnya : 
 <pict></pict>
-interpretasi
+interpretasi : 
+
 
 ## Kesimpulan
 Berdasarkan analisis dan pengujian, kesimpulan dari proyek ini adalah:
