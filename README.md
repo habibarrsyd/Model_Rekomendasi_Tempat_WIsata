@@ -92,7 +92,7 @@ Time_Minutes: Estimasi durasi kunjungan (beberapa nilai hilang).
 Coordinate, Lat, Long: Koordinat geografis.
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/poinkolom.jpg"><br>
 
-- user.csv:
+- user.csv: <br>
 User_Id: Id unik pengguna
 
 Location : domisili pengguna
