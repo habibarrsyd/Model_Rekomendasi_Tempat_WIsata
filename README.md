@@ -46,18 +46,18 @@ Link : https://www.kaggle.com/datasets/aprabowo/indonesia-tourism-destination
 #### Tipe dan Bentuk Data 
 Proyek ini menggunakan tiga dataset dari dataset Destinasi Wisata Indonesia di Kaggle:
 
-- tourism_rating.csv:
-Berisi penilaian pengguna untuk destinasi wisata.
-Kolom: User_Id, Place_Id, Place_Ratings.
-Ukuran: 10.000 entri awal, dengan 79 duplikat dihapus.
-Tidak ada nilai yang hilang.
-- tourism_with_id.csv:
-Detail tentang destinasi wisata.
-Kolom: Place_Id, Place_Name, Description, Category, City, Price, Rating, Time_Minutes, Coordinate, Lat, Long.
-Ukuran: 437 entri.
-Menghapus dua kolom yang tidak relevan (Unnamed: 11, Unnamed: 12).
-- user.csv:
-Informasi pengguna (tidak banyak digunakan di notebook tetapi tersedia untuk pengembangan lebih lanjut).
+- tourism_rating.csv: <br>
+Berisi penilaian pengguna untuk destinasi wisata. <br>
+Kolom: User_Id, Place_Id, Place_Ratings. <br>
+Ukuran: 10.000 entri awal, dengan 79 duplikat dihapus. <br>
+Tidak ada nilai yang hilang. <br>
+- tourism_with_id.csv: <br>
+Detail tentang destinasi wisata. <br>
+Kolom: Place_Id, Place_Name, Description, Category, City, Price, Rating, Time_Minutes, Coordinate, Lat, Long. <br>
+Ukuran: 437 entri. <br>
+Menghapus dua kolom yang tidak relevan (Unnamed: 11, Unnamed: 12).<br>
+- user.csv: <br>
+Informasi pengguna. <br>
 Kolom: User_Id, atribut pengguna tambahan.
 
 Deskripsi Variabel
