@@ -40,10 +40,9 @@ Untuk mencapai tujuan, dua pendekatan rekomendasi diusulkan:
 
 ## Data Understanding
 #### Sumber Data
-<img></img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/datakaggle.jpg"><br>
 Link : https://www.kaggle.com/datasets/aprabowo/indonesia-tourism-destination
 
-Informasi Dataset
 #### Tipe dan Bentuk Data 
 Proyek ini menggunakan tiga dataset dari dataset Destinasi Wisata Indonesia di Kaggle:
 
@@ -66,60 +65,88 @@ Dataset memiliki 5 variabel dengan keterangan sebagai berikut:
 
 - tourism_rating.csv:
 User_Id: Pengidentifikasi unik untuk pengguna.
+
 Place_Id: Pengidentifikasi unik untuk destinasi wisata.
+
 Place_Ratings: Penilaian yang diberikan pengguna untuk destinasi (skala: 1–5).
-<img>
+<img src = "https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/bentukratekolom.jpg"><br>
 
 - tourism_with_id.csv:
+
 Place_Id: Pengidentifikasi unik untuk destinasi.
+
 Place_Name: Nama destinasi.
+
 Description: Deskripsi singkat destinasi.
+
 Category: Jenis destinasi (misalnya, Bahari untuk pantai).
+
 City: Lokasi destinasi.
+
 Price: Harga tiket masuk (dalam IDR).
+
 Rating: Rata-rata penilaian destinasi.
+
 Time_Minutes: Estimasi durasi kunjungan (beberapa nilai hilang).
+
 Coordinate, Lat, Long: Koordinat geografis.
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/poinkolom.jpg"><br>
 
 - user.csv:
 User_Id: Id unik pengguna
+
 Location : domisili pengguna
+
 Age : Usia Pengguna
-<img>
+
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/userkolom.jpg"><br>
 
 ### Menangani Missing Value 
 Pada tahap ini, dataset diperiksa untuk memastikan tidak ada nilai yang hilang (missing values) Berdasarkan analisis awal:
-<img><br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/nullrate.jpg"><br>
 Tidak ada nilai yang hilang pada dataset (dikonfirmasi dengan data.isnull().sum()).
 ### Menangani Data Duplikat
-Pada dataset ini terdapat duplikasi data sebanyak 79 data
-<img>
-Kemudian akan dilakukan penghapusan data duplikat 
-<img>
+Pada dataset ini terdapat duplikasi data sebanyak 79 data <br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/rateduplikat.jpg"><br>
+Kemudian akan dilakukan penghapusan data duplikat <br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/dropduplikat.jpg"><br>
 
 ### Visualisasi Data EDA
 
 Visualisasi data dilakukan untuk menggali insight yang terlihat dari data:
 - Tempat destinasi dengan rating terbanyak
-<img src="https://github.com/habibarrsyd/Predictive_Analysis_Return_Stock_BMRI_Prediction-/blob/2424506a29e46ba9f56a72f940f261567d855ec5/img/graph_data_predictiveanalysis.jpg"><br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasiratingall.jpg"><br>
 
 Interpretasi:
 
 - Sebaran tempat destinasi berdasarkan kategori
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasikategoriall.jpg"><br>
+Interpretasi :
+
 - Sebaran usia pengguna
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/usiaall.jpg"><br>
+Interpretasi :
+
 - Persebaran harga masuk destinasi
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hargaall.jpg"><br>
+Interpretasi :
+
 - Sebaran lokasi pengguna
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/sebaranuser.jpg"><br>
+Interpretasi :
+
 - Tempat destinasi di Jogja dengan rating terbanyak
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasiratingjogja.jpg"><br>
+Interpretasi :
+
 - Sebaran tempat destinasi di Jogja (setelah filter) berdasarkan kategori
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasikategorijogja.jpg"><br>
+Interpretasi :
+
 - Sebaran harga masuk destinasi di Jogja
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hargajogja.jpg"><br>
+Interpretasi :
+
 
 ## Data Preparation
 ### Feature Engineering:
@@ -129,10 +156,8 @@ Interpretasi:
 point = point[point['City'] == 'Yogyakarta']
 rate = pd.merge(rate, point[['Place_Id']], how='right', on='Place_Id')
 ```
-
-
-Bentuk data yang terbentuk : 
-<img src="https://github.com/habibarrsyd/Predictive_Analysis_Return_Stock_BMRI_Prediction-/blob/2424506a29e46ba9f56a72f940f261567d855ec5/img/data_after_fenginering_predictiveanalysis.jpg"><br>
+Bentuk data yang terbentuk : <br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/bentukpoinmodif.jpg"><br>
 
 #### Maping Id
 ```
@@ -256,7 +281,8 @@ dijelaskan fungsinya
 
 ## Evaluasi
 ### Collaborative Filtering
-<img>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hasilepoch.jpg"><br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/grafikrmse.jpg"><br>
 dijelaskan isinya
 
 ### Content Based Filtering
@@ -267,17 +293,19 @@ print(f"Jumlah baris point: {len(point)}")
 print(f"Indices keys example: {list(indices.keys())[:10]}")
 print(f"indices[{179}]: {indices.get(179)}")
 ```
-Output : 
-<img>
+Output : <br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ukcosim.jpg"><br>
 
 #### Melihat key yang dapat diujikan
 ```
 print(point['Place_Id'].unique())
 ```
-#### Bentuk data yang dapat diujikan
-<img>
+#### Bentuk key data yang dapat diujikan
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/rawdata.jpg"><br>
 
 #### Kaitannya dengan hasil simulasi
+Contoh bentuk hasil simulasi <br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
 dijelaskan
 
 ## Pengujian  
@@ -337,7 +365,7 @@ print(tabulate(recommended_table, headers=["#", "Nama Tempat", "Kategori", "Rati
 ```
 dijelaskan skemanya ngapain
 hasilnya : 
-<pict></pict>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicolaboratiffilter.jpg"><br>
 interpretasi : 
 
 
@@ -347,7 +375,7 @@ get_content_recommendations(210)
 ```
 dijelaskan skemanya gimana
 hasilnya : 
-<pict></pict>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
 interpretasi : 
 
 
