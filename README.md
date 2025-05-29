@@ -63,11 +63,10 @@ Kolom: User_Id, atribut pengguna tambahan.
 Deskripsi Variabel
 Dataset memiliki 5 variabel dengan keterangan sebagai berikut:
 
-- tourism_rating.csv:<br>
+- tourism_rating.csv: <br>
+
 User_Id: Pengidentifikasi unik untuk pengguna.<br>
-
 Place_Id: Pengidentifikasi unik untuk destinasi wisata.<br>
-
 Place_Ratings: Penilaian yang diberikan pengguna untuk destinasi (skala: 1–5).<br>
 <img src = "https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/bentukratekolom.jpg"><br>
 
