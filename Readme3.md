@@ -21,14 +21,14 @@ Berdasarkan latar belakang di atas, permasalahan yang akan dibahas dalam proyek 
 
 1. Bagaimana cara membangun sistem rekomendasi yang dapat memberikan saran destinasi wisata di Indonesia yang sesuai dengan preferensi pengguna berdasarkan data penilaian dan atribut destinasi?
 2. Seberapa efektif pendekatan collaborative filtering dan content-based filtering dalam memberikan rekomendasi yang akurat?
-3. Bagaimana cara mengevaluasi performa sistem rekomendasi menggunakan metrik seperti RMSE untuk collaborative filtering dan Precision@5 untuk content-based filtering?
+3. Bagaimana cara mengevaluasi performa sistem rekomendasi menggunakan metrik seperti RMSE untuk collaborative filtering dan Recall@5 untuk content-based filtering?
 
 ### Goals
 Berdasarkan problem statements, tujuan proyek ini adalah:
 
 1. Membangun sistem rekomendasi destinasi wisata yang akurat menggunakan pendekatan collaborative filtering dan content-based filtering.
 2. Menyediakan rekomendasi yang mendukung wisatawan dalam merencanakan perjalanan yang sesuai dengan minat mereka.
-3. Mengevaluasi performa sistem dengan metrik Root Mean Squared Error (RMSE) untuk collaborative filtering dan Precision@5 untuk content-based filtering.
+3. Mengevaluasi performa sistem dengan metrik Root Mean Squared Error (RMSE) untuk collaborative filtering dan Recall@5 untuk content-based filtering.
 
 ### Solution Statement
 Untuk mencapai tujuan, dua pendekatan rekomendasi diusulkan:
@@ -36,7 +36,7 @@ Untuk mencapai tujuan, dua pendekatan rekomendasi diusulkan:
 - Menerapkan collaborative filtering menggunakan TensorFlow untuk merekomendasikan destinasi berdasarkan pola penilaian pengguna.
 - Menerapkan content-based filtering untuk merekomendasikan destinasi berdasarkan kesamaan atribut seperti kategori, lokasi, dan harga.
 - Menggunakan MinMaxScaler untuk normalisasi data numerik agar sesuai dengan kebutuhan model.
-- Mengevaluasi model dengan metrik RMSE untuk collaborative filtering dan Precision@5 untuk content-based filtering.
+- Mengevaluasi model dengan metrik RMSE untuk collaborative filtering dan Recall@5 untuk content-based filtering.
 
 ## Data Understanding
 #### Sumber Data
