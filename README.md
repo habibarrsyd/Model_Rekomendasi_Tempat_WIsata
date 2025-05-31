@@ -40,7 +40,7 @@ Untuk mencapai tujuan, dua pendekatan rekomendasi diusulkan:
 
 ## Data Understanding
 #### Sumber Data
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/datakaggle.jpg"><br>
+<img src="img/datakaggle.jpg"><br>
 Link : https://www.kaggle.com/datasets/aprabowo/indonesia-tourism-destination
 
 #### Tipe dan Bentuk Data 
@@ -68,7 +68,7 @@ Dataset memiliki 5 variabel dengan keterangan sebagai berikut:
 User_Id: Pengidentifikasi unik untuk pengguna.<br>
 Place_Id: Pengidentifikasi unik untuk destinasi wisata.<br>
 Place_Ratings: Penilaian yang diberikan pengguna untuk destinasi (skala: 1–5).<br>
-<img src = "https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/bentukratekolom.jpg"><br>
+<img src = "img/bentukratekolom.jpg"><br>
 
 - tourism_with_id.csv: <br>
 
@@ -81,58 +81,58 @@ Price: Harga tiket masuk (dalam IDR). <br>
 Rating: Rata-rata penilaian destinasi. <br>
 Time_Minutes: Estimasi durasi kunjungan (beberapa nilai hilang).<br>
 Coordinate, Lat, Long: Koordinat geografis. <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/poinkolom.jpg"><br>
+<img src="img/poinkolom.jpg"><br>
 
 - user.csv: <br>
 User_Id: Id unik pengguna <br>
 Location : domisili pengguna <br>
 Age : Usia Pengguna <br>
 
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/userkolom.jpg"><br>
+<img src="img/userkolom.jpg"><br>
 
 ### Visualisasi Data EDA
 
 Visualisasi data dilakukan untuk menggali insight yang terlihat dari data:
 - Tempat destinasi dengan rating terbanyak
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasiratingall.jpg"><br>
+<img src="img/destinasiratingall.jpg"><br>
 
 Interpretasi : <br>
 Grafik "Tempat Destinasi dengan Rating Terbanyak" menunjukkan Gereja Perawan Maria Tak Berdoa Surabaya sebagai destinasi dengan rating tertinggi (mendekati 400), diikuti Gunung Lalakon (sekitar 350), Pantai Parangtritis, Taman Sungai Mudal, Pantai Kesirat, Kampung Batu Malakasari, Geoforest Watu Payung Turunan, Wisata Kuliner Pecenongan, Taman Film, dan NuArt Sculpture Park dengan jumlah rating berkisar 100 hingga 300, di mana Wisata Kuliner Pecenongan memiliki rating terendah; hal ini mencerminkan dominasi destinasi religi dan alam dalam preferensi wisatawan, dengan variasi signifikan yang mengindikasikan perbedaan popularitas dan potensi kebutuhan promosi tambahan untuk destinasi dengan rating lebih rendah.
 
 
 - Sebaran tempat destinasi berdasarkan kategori
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasikategoriall.jpg"><br>
+<img src="img/destinasikategoriall.jpg"><br>
 Interpretasi : <br>
 Grafik "Tempat Destinasi Berdasarkan Kategori" menunjukkan distribusi jumlah destinasi wisata di Indonesia berdasarkan kategori, dengan **Taman Hiburan** memimpin sebagai kategori dengan jumlah destinasi terbanyak (sekitar 130), diikuti oleh **Budaya** (sekitar 120) dan **Cagar Alam** (sekitar 100), yang menunjukkan popularitas tinggi destinasi hiburan, budaya, dan alam; sementara itu, kategori **Bahari** memiliki sekitar 60 destinasi, dan kategori dengan jumlah terendah adalah **Pusat Perbelanjaan** serta **Tempat Ibadah**, masing-masing dengan kurang dari 20 destinasi, mengindikasikan bahwa destinasi berbasis alam dan hiburan lebih dominan dibandingkan destinasi komersial atau religi dalam dataset ini.
 
 - Sebaran usia pengguna
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/usiaall.jpg"><br>
+<img src="img/usiaall.jpg"><br>
 Interpretasi : <br>
 Grafik "Umur Pengguna" menunjukkan distribusi usia pengguna dalam bentuk box plot, dengan rentang usia utama berkisar antara 25 hingga 35 tahun, di mana nilai tengah (median) berada sekitar 30 tahun, menandakan bahwa mayoritas pengguna berada dalam kelompok usia dewasa muda; batas bawah kuartil pertama (Q1) berada di sekitar 25 tahun dan batas atas kuartil ketiga (Q3) mendekati 35 tahun, dengan sedikit variasi yang ditunjukkan oleh whisker yang tidak terlalu panjang, serta tidak adanya outlier ekstrem, mengindikasikan bahwa populasi pengguna cukup homogen dan didominasi oleh individu berusia 25-35 tahun.
 
 - Persebaran harga masuk destinasi
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hargaall.jpg"><br>
+<img src="img/hargaall.jpg"><br>
 Interpretasi : <br>
 Grafik "Harga Masuk Destinasi" menunjukkan distribusi frekuensi harga tiket masuk destinasi wisata, dengan mayoritas destinasi (sekitar 350) memiliki harga masuk gratis atau sangat rendah (mendekati 0 IDR), diikuti oleh puncak kecil pada rentang harga di bawah 20.000 IDR, yang menunjukkan bahwa destinasi dengan tiket masuk murah sangat dominan; frekuensi destinasi dengan harga masuk lebih tinggi (di atas 20.000 IDR hingga 800.000 IDR) sangat minim, dengan penurunan drastis setelah 20.000 IDR dan hanya sedikit destinasi yang mencapai harga 200.000 IDR atau lebih, mengindikasikan bahwa sebagian besar destinasi wisata di dataset ini bersifat terjangkau atau gratis, kemungkinan mencakup destinasi alam atau situs publik.
 
 - Sebaran lokasi pengguna
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/sebaranuser.jpg"><br>
+<img src="img/sebaranuser.jpg"><br>
 Interpretasi : <br>
 Grafik "Lokasi Pengguna" menunjukkan distribusi jumlah pengguna berdasarkan lokasi, dengan **Semarang** memimpin sebagai lokasi dengan pengguna terbanyak (sekitar 38), diikuti oleh **Cirebon**, **Lampung**, **Jakarta Utara**, dan **Jakarta Selatan** dengan jumlah pengguna berkisar antara 15 hingga 20, menunjukkan konsentrasi pengguna yang signifikan di wilayah Jawa dan Lampung; lokasi seperti **Yogyakarta**, **Bogor**, **Depok**, **Jakarta Pusat**, **Jakarta Barat**, **Palembang**, **Sragen**, **Ponorogo**, **Klaten**, **Tanggerang**, **Solo**, **Sragen**, **Cilacap**, **Kota Gede**, **Karawang**, dan **Ngawi** memiliki jumlah pengguna yang lebih rendah (antara 5 hingga 15), sementara **Madura** memiliki pengguna paling sedikit (kurang dari 5), mengindikasikan bahwa sebagian besar pengguna berasal dari kota-kota besar atau wilayah yang lebih urban di Pulau Jawa.
 
 
 - Tempat destinasi di Jogja dengan rating terbanyak
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasiratingjogja.jpg"><br>
+<img src="img/destinasiratingjogja.jpg"><br>
 Interpretasi : <br>
 Grafik "Tempat Destinasi dengan rating terbanyak di Jogja" menunjukkan distribusi jumlah rating untuk berbagai destinasi wisata di Yogyakarta, dengan Taman Sungai Mudal memimpin sebagai destinasi paling banyak dinilai (sekitar 175 rating), diikuti oleh Pantai Parangtritis dan Pantai Kesirat dengan jumlah rating mendekati 175, serta Pantai Ngambor, Puncak Segoro, Pasar Beringharjo, Pantai Juwong, dan Geoforest Watu Payung Turunan yang memiliki rating antara 125 hingga 175, menunjukkan popularitas tinggi destinasi alam dan pasar tradisional; sementara itu, Museum Benteng Vredeburg Yogyakarta dan De Mata Museum Jogja memiliki rating lebih rendah (sekitar 75), mengindikasikan bahwa destinasi berbasis alam lebih diminati dibandingkan destinasi museum di kalangan wisatawan yang memberikan penilaian.
 
 - Sebaran tempat destinasi di Jogja (setelah filter) berdasarkan kategori
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/destinasikategorijogja.jpg"><br>
+<img src="img/destinasikategorijogja.jpg"><br>
 Interpretasi : <br>
 Grafik "Tempat Destinasi di Jogja Berdasarkan Kategori" menunjukkan distribusi jumlah destinasi wisata di Yogyakarta berdasarkan kategori, dengan Taman Hiburan mendominasi sebagai kategori dengan jumlah destinasi terbanyak (sekitar 35), diikuti oleh Bahari (sekitar 25) dan Budaya (sekitar 20), yang menunjukkan preferensi kuat terhadap destinasi hiburan dan alam; Cagar Alam memiliki jumlah destinasi yang lebih rendah (sekitar 15), sementara Pusat Perbelanjaan memiliki jumlah terendah (kurang dari 5), mengindikasikan bahwa destinasi berbasis hiburan dan alam jauh lebih banyak dibandingkan destinasi komersial di wilayah ini.
 
 - Sebaran harga masuk destinasi di Jogja
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hargajogja.jpg"><br>
+<img src="img/hargajogja.jpg"><br>
 Interpretasi : <br>
 Grafik "Harga Masuk Destinasi di Jogja" menunjukkan distribusi frekuensi harga tiket masuk destinasi wisata di Yogyakarta, dengan mayoritas destinasi (sekitar 100) memiliki harga masuk gratis (0 IDR), diikuti oleh sedikit destinasi dengan harga di bawah 10.000 IDR, menandakan dominasi destinasi gratis atau sangat terjangkau; frekuensi destinasi dengan harga masuk lebih tinggi (10.000 IDR hingga 50.000 IDR) menurun drastis, dengan hanya beberapa destinasi yang mencapai 20.000 IDR hingga 30.000 IDR, dan hampir tidak ada destinasi dengan harga di atas 40.000 IDR atau 50.000 IDR, mengindikasikan bahwa destinasi wisata di Jogja umumnya bersifat terjangkau atau gratis, kemungkinan mencakup situs alam dan budaya publik.
 
@@ -140,13 +140,13 @@ Grafik "Harga Masuk Destinasi di Jogja" menunjukkan distribusi frekuensi harga t
 ## Data Preparation
 ### Menangani Missing Value 
 Pada tahap ini, dataset diperiksa untuk memastikan tidak ada nilai yang hilang (missing values) Berdasarkan analisis awal:
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/nullrate.jpg"><br>
+<img src="img/nullrate.jpg"><br>
 Tidak ada nilai yang hilang pada dataset (dikonfirmasi dengan data.isnull().sum()).
 ### Menangani Data Duplikat
 Pada dataset ini terdapat duplikasi data sebanyak 79 data <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/rateduplikat.jpg"><br>
+<img src="img/rateduplikat.jpg"><br>
 Kemudian akan dilakukan penghapusan data duplikat <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/dropduplikat.jpg"><br>
+<img src="img/dropduplikat.jpg"><br>
 
 ### Feature Engineering
 #### Dilakukan filtering pada dataset untuk mengambil data pada daerah Jogja saja.
@@ -156,7 +156,7 @@ point = point[point['City'] == 'Yogyakarta']
 rate = pd.merge(rate, point[['Place_Id']], how='right', on='Place_Id')
 ```
 Bentuk data yang terbentuk : <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/bentukpoinmodif.jpg"><br>
+<img src="img/bentukpoinmodif.jpg"><br>
 
 #### Maping Id
 ```
@@ -341,10 +341,9 @@ Penjelasan : <br>
 Kode diatas berbasis model prediktif yang menerima input User ID dari pengguna, lalu mencari tempat-tempat yang belum dikunjungi oleh user tersebut. Pertama, kode memvalidasi keberadaan User ID dalam data dan menyiapkan daftar tempat yang belum dikunjungi oleh user tersebut. Untuk setiap tempat yang belum dikunjungi, kode membentuk pasangan user-tempat lalu memprediksi rating menggunakan model yang sudah dilatih sebelumnya. Setelah itu, sistem memilih 7 tempat dengan rating tertinggi sebagai rekomendasi dan menampilkannya dalam bentuk tabel menggunakan pustaka tabulate. Selain itu, kode juga menampilkan 5 tempat yang paling disukai oleh user berdasarkan rating sebelumnya untuk konteks tambahan terhadap preferensi pengguna.
 
 Output : <br> 
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicolaboratiffilter.jpg"><br>
+<img src="img/ujicolaboratiffilter.jpg"><br>
 Interpretasi : <br> 
-Berdasarkan hasil pengujian sistem Collaborative Filtering untuk user dengan ID 200, sistem berhasil menampilkan dua bagian utama: (1) Tempat yang Pernah Disukai, dan (2) Rekomendasi Tempat. P
-Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kategori beragam seperti Cagar Alam, Budaya, dan Bahari, dengan rating tinggi (≥4.2) dan harga yang relatif terjangkau. Sistem kemudian merekomendasikan 7 tempat yang belum dikunjungi, yang secara pola serupa dengan preferensi sebelumnya—kategori Cagar Alam dan Bahari masih mendominasi, serta harga tetap terjaga dalam rentang murah sampai sedang. Ini menunjukkan bahwa model dapat menangkap pola kesukaan pengguna berdasarkan interaksi historis pengguna lain yang memiliki kesamaan selera, dan memberikan rekomendasi yang masuk akal serta relevan. Secara keseluruhan, sistem bekerja baik dalam menyarankan destinasi wisata yang sesuai dengan preferensi user.  <br>
+Berdasarkan hasil pengujian sistem Collaborative Filtering untuk user dengan ID 200, sistem berhasil menampilkan dua bagian utama: (1) Tempat yang Pernah Disukai, dan (2) Rekomendasi Tempat. Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kategori beragam seperti Cagar Alam, Budaya, dan Bahari, dengan rating tinggi (≥4.2) dan harga yang relatif terjangkau. Sistem kemudian merekomendasikan 7 tempat yang belum dikunjungi, yang secara pola serupa dengan preferensi sebelumnya—kategori Cagar Alam dan Bahari masih mendominasi, serta harga tetap terjaga dalam rentang murah sampai sedang. Ini menunjukkan bahwa model dapat menangkap pola kesukaan pengguna berdasarkan interaksi historis pengguna lain yang memiliki kesamaan selera, dan memberikan rekomendasi yang masuk akal serta relevan. Secara keseluruhan, sistem bekerja baik dalam menyarankan destinasi wisata yang sesuai dengan preferensi user.  <br>
 
 ### Content Based Filtering
 
@@ -395,14 +394,14 @@ print(f"Indices keys example: {list(indices.keys())[:10]}")
 print(f"indices[{179}]: {indices.get(179)}")
 ```
 Output : <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ukcosim.jpg"><br>
+<img src="img/ukcosim.jpg"><br>
 
 #### Melihat key yang dapat diujikan
 ```
 print(point['Place_Id'].unique())
 ```
 #### Bentuk key data yang dapat diujikan
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/rawdata.jpg"><br>
+<img src="img/rawdata.jpg"><br>
 
 #### Code Inference
 ##### Percobaan Inference Pertama
@@ -426,22 +425,22 @@ Kode ini menunjukkan bagaimana fungsi get_content_recommendations dijalankan unt
 
 Output : <br>
 - Percobaan Pertama <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/ujicbf1.jpg"><br>
+<img src="img/ujicbf1.jpg"><br>
 - Percobaan Kedua <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/ujicbf2.jpg"><br>
+<img src="img/ujicbf2.jpg"><br>
 Interpretasi : <br> 
 sistem Content-Based Filtering menunjukkan performa yang konsisten dalam merekomendasikan destinasi wisata berdasarkan kesamaan teks Description dan Category menggunakan Cosine Similarity. Untuk Place_Id=210 (Pantai Congot) dengan kategori "Bahari", semua 5 rekomendasi (Pantai Kukup, Pantai Timang, Pantai Baron, Pantai Drini, dan Pantai Watu Kodok) berada dalam kategori yang sama dengan rating tinggi (4.0–4.7) dan skor kesamaan yang cukup tinggi (0.293223–0.328401), menunjukkan bahwa sistem efektif mengidentifikasi destinasi pantai yang relevan meskipun skor kesamaan tidak terlalu mendekati 1.0, kemungkinan karena deskripsi yang kurang spesifik. Sebaliknya, untuk Place_Id=179 (Candi Ratu Boko) dengan kategori "Budaya", 4 dari 5 rekomendasi (Candi Tjo, Candi Prambanan, Candi Sewu, dan Tebing Breksi) juga sesuai kategori dengan rating tinggi (4.4–4.7) dan skor kesamaan yang lebih bervariasi (0.163692–0.341665), namun masuknya Sitrus Warungboto (kategori Taman Hiburan, skor 0.163692) menunjukkan sedikit inkonsistensi, mungkin akibat overlap kata atau deskripsi generik, mengindikasikan bahwa akurasi sistem bergantung pada kualitas dan spesifisitas data teks. Secara keseluruhan, sistem menunjukkan potensi baik untuk kategori yang seragam, tetapi perlu perbaikan dalam membedakan konten yang lebih bervariasi.
 
 
 ## Evaluasi
 ### Collaborative Filtering
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/hasilepoch.jpg"><br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/grafikrmse.jpg"><br>
+<img src="img/hasilepoch.jpg"><br>
+<img src="img/grafikrmse.jpg"><br>
 Penjelasan : <br>
 Berdasarkan grafik dan log pelatihan yang ditampilkan, model menunjukkan penurunan RMSE (Root Mean Squared Error) secara konsisten pada data pelatihan dari sekitar 0.3496 ke 0.3492 selama 50 epoch, sementara RMSE pada data validasi cenderung stagnan di sekitar 0.3493. Meskipun nilai RMSE pelatihan terus menurun, penurunan tersebut sangat kecil, dan tidak diikuti oleh peningkatan performa pada data validasi, yang menunjukkan bahwa model mungkin mulai mengalami overfitting ringan atau bahwa model telah mencapai batas kemampuannya dalam mempelajari pola dari data. Hal ini diperkuat oleh log epoch yang menunjukkan bahwa mulai dari epoch ke-33 hingga ke-50, nilai val_root_mean_squared_error tetap berada pada angka 0.3493 tanpa perubahan berarti, menunjukkan bahwa model tidak lagi belajar hal baru yang berdampak terhadap generalisasi.
 
 ### Content Based Filtering
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/evaluasicbf.jpg"><br>
+<img src="img/evaluasicbf.jpg"><br>
 Berdasarkan hasil evaluasi Content-Based Filtering pada dua destinasi, sistem menunjukkan performa yang bervariasi dalam merekomendasikan destinasi wisata menggunakan Cosine Similarity berbasis teks Description dan Category. Untuk Place_Id=210 (Pantai Congot, Bahari), semua 5 rekomendasi (Pantai Kukup, Pantai Timang, Pantai Baron, Pantai Drini, Pantai Watu Kodok) sesuai kategori dengan rating tinggi (4.0–4.7) dan skor kesamaan 0.293223–0.328401, menandakan sistem cukup efektif untuk kategori seragam seperti "Bahari", meskipun skor kesamaan yang relatif rendah mengindikasikan deskripsi teks mungkin kurang spesifik. Sementara itu, untuk Place_Id=179 (Candi Ratu Boko, Budaya), 4 rekomendasi (Candi Tjo, Candi Prambanan, Candi Sewu, Tebing Breksi) relevan dengan kategori "Budaya" dan rating 4.4–4.7, namun satu rekomendasi (Sitrus Warungboto, Taman Hiburan) dengan skor kesamaan terendah (0.163692) menunjukkan adanya ketidaktepatan, kemungkinan akibat deskripsi generik atau overlap kata, sehingga sistem perlu peningkatan pada kualitas data teks agar lebih akurat dalam merekomendasikan destinasi lintas kategori.
 
 ## Kesimpulan
