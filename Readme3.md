@@ -207,25 +207,34 @@ x_train, x_val, y_train, y_val = train_test_split(x, y, test_size=0.2, random_st
 Penjelasan : <br>
 Pada tahapan ini dilakukan pemisahan data uji dan data latih agar tidak terjadi kebocoran data serta menggunakan rasio 80 persen untuk data latih dan 20 persen untuk data uji
 
-#### Ekstraksi Fitur
+#### Praproses Teks, Ekstraksi Fitur, serta Hitung Similaritas
 ```
+import re
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
 
-# Misal kolom fitur text untuk tiap tempat ada di 'Description' atau 'Features'
-descriptions = point['Description'].fillna('')  # sesuaikan kolom yang dipakai
+# Fungsi preprocessing teks
+def preprocess_text(text):
+    text = text.lower()  # Ubah ke huruf kecil
+    text = re.sub(r'[^\w\s]', '', text)  # Hapus tanda baca
+    return text
 
-tfidf = TfidfVectorizer(stop_words='english')
+# Gabungkan Description dan Category
+point['combined_features'] = point['Description'].fillna('') + ' ' + point['Category'].fillna('')
+descriptions = point['combined_features'].apply(preprocess_text)
+
+# Gunakan stop words bahasa Indonesia
+stopword_factory = StopWordRemoverFactory()
+stop_words = stopword_factory.get_stop_words()
+tfidf = TfidfVectorizer(stop_words=stop_words)
 tfidf_matrix = tfidf.fit_transform(descriptions)
-
 cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-
-# buat indices sesuai semua place_id
-indices = pd.Series(range(len(point)), index=point['Place_Id'])
 ```
 Penjelasan : <br>
 
-Kode ini berjalan dengan memanfaatkan data teks dari kolom Description pada dataframe point; pertama, kolom Description diisi dengan string kosong untuk menangani nilai yang hilang menggunakan fillna(''), kemudian teks tersebut diubah menjadi representasi numerik menggunakan TfidfVectorizer dengan menghapus stop words dalam bahasa Inggris untuk mengurangi noise; matriks TF-IDF dihasilkan dengan fit_transform untuk mengukur pentingnya kata-kata dalam deskripsi setiap destinasi, diikuti oleh perhitungan cosine similarity antar deskripsi menggunakan cosine_similarity untuk membentuk matriks kesamaan cosine_sim yang menunjukkan seberapa mirip setiap destinasi berdasarkan deskripsinya; terakhir, indices dibuat sebagai pemetaan antara Place_Id dan indeks barisnya menggunakan pd.Series agar memudahkan pencarian destinasi saat memberikan rekomendasi, sehingga sistem dapat merekomendasikan destinasi dengan deskripsi serupa berdasarkan kesamaan teks. <br>
+Kode ini bekerja dengan mengolah teks dari DataFrame point untuk membangun sistem Content-Based Filtering berbasis kesamaan teks, dimulai dengan fungsi preprocess_text yang mengubah teks menjadi huruf kecil dan menghapus tanda baca menggunakan regular expression untuk memastikan konsistensi dan menghilangkan noise. Selanjutnya, kolom Description dan Category digabungkan menjadi combined_features, mengganti nilai kosong dengan string kosong, lalu diproses ulang dengan preprocess_text untuk menghasilkan descriptions yang bersih. Bagian vektorisasi menggunakan TfidfVectorizer dengan stop words bahasa Indonesia dari Sastrawi untuk mengabaikan kata-kata umum, mengubah teks menjadi matriks TF-IDF (tfidf_matrix) yang mencerminkan bobot kata berdasarkan frekuensi dan kelangkaan, dan akhirnya cosine_similarity menghitung matriks kesamaan kosinus antara semua destinasi untuk mengukur tingkat kemiripan konten, menjadi dasar rekomendasi selanjutnya. <br>
 
 
 ## Modelling
@@ -342,29 +351,6 @@ Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kateg
 
 #### Fungsi Rekomendasi
 ```
-import re
-from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
-from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.metrics.pairwise import cosine_similarity
-import pandas as pd
-
-# Fungsi preprocessing teks
-def preprocess_text(text):
-    text = text.lower()  # Ubah ke huruf kecil
-    text = re.sub(r'[^\w\s]', '', text)  # Hapus tanda baca
-    return text
-
-# Gabungkan Description dan Category
-point['combined_features'] = point['Description'].fillna('') + ' ' + point['Category'].fillna('')
-descriptions = point['combined_features'].apply(preprocess_text)
-
-# Gunakan stop words bahasa Indonesia
-stopword_factory = StopWordRemoverFactory()
-stop_words = stopword_factory.get_stop_words()
-tfidf = TfidfVectorizer(stop_words=stop_words)
-tfidf_matrix = tfidf.fit_transform(descriptions)
-cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
-
 def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
     """
     Mengembalikan top_n destinasi paling relevan berdasarkan kesamaan Cosine Similarity.
@@ -399,7 +385,7 @@ def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
     return result
 ```
 Penjelasan : <br>
-Fungsi ini merekomendasikan destinasi wisata dengan mengolah teks dari kolom Description dan Category di DataFrame point menggunakan TF-IDF Vectorizer dan Cosine Similarity. Pertama, teks digabung, dibersihkan (huruf kecil, hapus tanda baca), dan stop words bahasa Indonesia dihilangkan dengan Sastrawi, lalu diubah menjadi vektor TF-IDF untuk merepresentasikan kepentingan kata. Cosine Similarity menghitung kesamaan antar destinasi berdasarkan vektor ini, menghasilkan matriks kesamaan. Fungsi get_content_recommendations mengambil Place_Id, mengurutkan destinasi berdasarkan skor kesamaan, dan mengembalikan 5 destinasi teratas (kecuali diri sendiri) dengan detail seperti Place_Name, Category, Rating, Price, dan Similarity_Score, memungkinkan rekomendasi berbasis konten yang relevan meskipun akurasi terbatas oleh kualitas deskripsi. <br>
+Fungsi get_content_recommendations bekerja untuk menghasilkan rekomendasi destinasi wisata berdasarkan kesamaan Cosine Similarity dengan mengambil place_id sebagai acuan, memanfaatkan matriks kesamaan cosine_sim yang sudah dihitung sebelumnya dan parameter top_n (default 5) untuk menentukan jumlah rekomendasi, dimulai dengan validasi bahwa place_id ada dalam indices, jika tidak akan memunculkan error. Fungsi kemudian mengambil indeks destinasi acuan dari indices, mengakses baris terkait dari cosine_sim untuk mendapatkan semua skor kesamaan dengan destinasi lain, mengubahnya menjadi daftar tuple (indeks, skor) yang diurutkan secara menurun berdasarkan skor, dan memilih top_n destinasi teratas dengan melewati indeks diri sendiri menggunakan sim_scores[1:top_n+1]. Indeks destinasi yang dipilih diekstrak ke place_indices, digunakan untuk mengambil data dari DataFrame point dengan kolom Place_Id, Place_Name, Category, Rating, dan Price, lalu kolom Similarity_Score ditambahkan berdasarkan skor kesamaan, menghasilkan DataFrame yang dikembalikan sebagai rekomendasi terurut berdasarkan relevansi. <br>
 
 #### Melihat ukuran dari cosine, baris, dan key sampel
 ```
@@ -439,12 +425,12 @@ Penjelasan : <br>
 Kode ini menunjukkan bagaimana fungsi get_content_recommendations dijalankan untuk menghasilkan rekomendasi destinasi wisata berdasarkan Content-Based Filtering. Dengan mengatur place_id = 179 atau lainnya (misalnya, Taman Sungai Mudal, bukan Pantai Congot seperti yang salah disebut di komentar), kode memanggil fungsi untuk mendapatkan 5 destinasi paling mirip berdasarkan Cosine Similarity dari vektor TF-IDF yang dibuat dari teks Description dan Category. Fungsi mengembalikan DataFrame recommendations berisi kolom Place_Id, Place_Name, Category, Rating, Price, dan Similarity_Score. Pernyataan print menampilkan nama destinasi acuan (diambil dari point menggunakan Place_Id) dan daftar rekomendasi dalam format teks rapi tanpa indeks, memungkinkan pengguna melihat destinasi serupa dengan skor kesamaan tertinggi secara langsung.
 
 Output : <br>
-- Percobaan Pertama
+- Percobaan Pertama <br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/ujicbf1.jpg"><br>
-- Percobaan Kedua
+- Percobaan Kedua <br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/ujicbf2.jpg"><br>
 Interpretasi : <br> 
-Berdasarkan hasil pengujian sistem Content-Based Filtering untuk index ke-210, sistem merekomendasikan lima tempat wisata dengan kategori Bahari yang berlokasi di Yogyakarta, dan memiliki rating tinggi (≥4.0) serta harga seragam (mayoritas Rp10.000). Rekomendasi ini disusun berdasarkan kemiripan fitur konten seperti kategori, deskripsi, dan lokasi dari tempat yang menjadi acuan utama di index 210. Misalnya, tempat seperti Pantai Timang (rating 4.7) dan Pantai Watu Kodok (rating 4.6) muncul karena memiliki karakteristik serupa dengan destinasi yang menjadi basis pencarian (yaitu sesama pantai dengan tema bahari, di wilayah yang sama, dan memiliki ulasan baik). Ini menunjukkan bahwa sistem content-based dapat secara efektif mengenali dan merekomendasikan tempat wisata dengan fitur yang relevan berdasarkan preferensi eksplisit pengguna terhadap satu objek wisata tertentu. Secara keseluruhan pada model content based filtering, model berhasil memproses perintah dan berhasil memberikan output berupa rekomendasi kepada pengguna.
+sistem Content-Based Filtering menunjukkan performa yang konsisten dalam merekomendasikan destinasi wisata berdasarkan kesamaan teks Description dan Category menggunakan Cosine Similarity. Untuk Place_Id=210 (Pantai Congot) dengan kategori "Bahari", semua 5 rekomendasi (Pantai Kukup, Pantai Timang, Pantai Baron, Pantai Drini, dan Pantai Watu Kodok) berada dalam kategori yang sama dengan rating tinggi (4.0–4.7) dan skor kesamaan yang cukup tinggi (0.293223–0.328401), menunjukkan bahwa sistem efektif mengidentifikasi destinasi pantai yang relevan meskipun skor kesamaan tidak terlalu mendekati 1.0, kemungkinan karena deskripsi yang kurang spesifik. Sebaliknya, untuk Place_Id=179 (Candi Ratu Boko) dengan kategori "Budaya", 4 dari 5 rekomendasi (Candi Tjo, Candi Prambanan, Candi Sewu, dan Tebing Breksi) juga sesuai kategori dengan rating tinggi (4.4–4.7) dan skor kesamaan yang lebih bervariasi (0.163692–0.341665), namun masuknya Sitrus Warungboto (kategori Taman Hiburan, skor 0.163692) menunjukkan sedikit inkonsistensi, mungkin akibat overlap kata atau deskripsi generik, mengindikasikan bahwa akurasi sistem bergantung pada kualitas dan spesifisitas data teks. Secara keseluruhan, sistem menunjukkan potensi baik untuk kategori yang seragam, tetapi perlu perbaikan dalam membedakan konten yang lebih bervariasi.
 
 
 ## Evaluasi
@@ -456,7 +442,7 @@ Berdasarkan grafik dan log pelatihan yang ditampilkan, model menunjukkan penurun
 
 ### Content Based Filtering
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/evaluasicbf.jpg"><br>
-Terlihat bahwa model cukup bisa merepresentasikan hasil rekomendasi terlihat bahwa gambar diatas adalah hasil pengujian terhadap keys ke 210. Dari hasil yang ditampilkan terlihat bahwa jika melihat dari raw data nya pada keys ke 210 menunjukkan bahwa destinasi nya adalah Pantai Congot dimana menunjukkan kategori Bahari kemudian dari hasil rekomendasinya masih sangat relevan karena berhasil memberikan rekomendasi sesuai kategori yaitu Bahari dimana terlihat ada 5 Pantai yang berhasil direkomendasikan.
+Berdasarkan hasil evaluasi Content-Based Filtering pada dua destinasi, sistem menunjukkan performa yang bervariasi dalam merekomendasikan destinasi wisata menggunakan Cosine Similarity berbasis teks Description dan Category. Untuk Place_Id=210 (Pantai Congot, Bahari), semua 5 rekomendasi (Pantai Kukup, Pantai Timang, Pantai Baron, Pantai Drini, Pantai Watu Kodok) sesuai kategori dengan rating tinggi (4.0–4.7) dan skor kesamaan 0.293223–0.328401, menandakan sistem cukup efektif untuk kategori seragam seperti "Bahari", meskipun skor kesamaan yang relatif rendah mengindikasikan deskripsi teks mungkin kurang spesifik. Sementara itu, untuk Place_Id=179 (Candi Ratu Boko, Budaya), 4 rekomendasi (Candi Tjo, Candi Prambanan, Candi Sewu, Tebing Breksi) relevan dengan kategori "Budaya" dan rating 4.4–4.7, namun satu rekomendasi (Sitrus Warungboto, Taman Hiburan) dengan skor kesamaan terendah (0.163692) menunjukkan adanya ketidaktepatan, kemungkinan akibat deskripsi generik atau overlap kata, sehingga sistem perlu peningkatan pada kualitas data teks agar lebih akurat dalam merekomendasikan destinasi lintas kategori.
 
 ## Kesimpulan
 Berdasarkan analisis dan pengujian, kesimpulan dari proyek ini adalah:
