@@ -340,23 +340,84 @@ Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kateg
 ### Content Based Filtering
 #### Fungsi Rekomendasi
 ```
+import re
+from Sastrawi.StopWordRemover.StopWordRemoverFactory import StopWordRemoverFactory
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import pandas as pd
+
+# Fungsi preprocessing teks
+def preprocess_text(text):
+    text = text.lower()  # Ubah ke huruf kecil
+    text = re.sub(r'[^\w\s]', '', text)  # Hapus tanda baca
+    return text
+
+# Gabungkan Description dan Category
+point['combined_features'] = point['Description'].fillna('') + ' ' + point['Category'].fillna('')
+descriptions = point['combined_features'].apply(preprocess_text)
+
+# Gunakan stop words bahasa Indonesia
+stopword_factory = StopWordRemoverFactory()
+stop_words = stopword_factory.get_stop_words()
+tfidf = TfidfVectorizer(stop_words=stop_words)
+tfidf_matrix = tfidf.fit_transform(descriptions)
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
+
 def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
+    """
+    Mengembalikan top_n destinasi paling relevan berdasarkan kesamaan Cosine Similarity.
+    
+    Parameters:
+    - place_id: ID destinasi acuan
+    - cosine_sim: Matriks Cosine Similarity
+    - top_n: Jumlah rekomendasi yang diinginkan (default 5)
+    
+    Returns:
+    - DataFrame berisi top_n destinasi relevan, diurutkan berdasarkan skor kesamaan
+    """
+    if place_id not in indices:
+        raise ValueError(f"Place_ID {place_id} tidak ditemukan.")
+    
     idx = indices[place_id]
+    # Ambil semua skor kesamaan untuk destinasi ini
     sim_scores = list(enumerate(cosine_sim[idx]))
+    # Urutkan berdasarkan skor kesamaan (descending)
     sim_scores = sorted(sim_scores, key=lambda x: x[1], reverse=True)
-    sim_scores = sim_scores[1:top_n+1]  # ambil 5 tempat mirip (selain dirinya sendiri)
+    # Ambil top_n destinasi (kecuali diri sendiri)
+    sim_scores = sim_scores[1:top_n+1]
+    
+    # Ambil indeks destinasi yang relevan
     place_indices = [i[0] for i in sim_scores]
-    return point.iloc[place_indices]
+    
+    # Kembalikan DataFrame dengan kolom relevan
+    result = point.iloc[place_indices][['Place_Id', 'Place_Name', 'Category', 'Rating', 'Price']].copy()
+    # Tambahkan kolom skor kesamaan
+    result['Similarity_Score'] = [score[1] for score in sim_scores]
+    
+    return result
 ```
 Penjelasan : <br>
-Fungsi ini mengambil place_id sebagai input untuk merekomendasikan destinasi serupa berdasarkan kesamaan teks dari deskripsi; proses dimulai dengan mendapatkan indeks destinasi dari place_id menggunakan indices, lalu mengambil skor kesamaan dari matriks cosine_sim yang telah dihitung sebelumnya untuk destinasi tersebut; skor kesamaan diurutkan secara menurun dengan sorted dan lambda, kemudian 5 destinasi paling mirip (selain destinasi itu sendiri) dipilih dengan mengabaikan indeks pertama (sim_scores[1:top_n+1]); indeks destinasi yang mirip diekstrak dan digunakan untuk mengambil data dari dataframe point yang dikembalikan sebagai hasil rekomendasi, sehingga memungkinkan wisatawan mendapatkan saran destinasi dengan karakteristik serupa berdasarkan deskripsi teks. <br>
+Fungsi ini merekomendasikan destinasi wisata dengan mengolah teks dari kolom Description dan Category di DataFrame point menggunakan TF-IDF Vectorizer dan Cosine Similarity. Pertama, teks digabung, dibersihkan (huruf kecil, hapus tanda baca), dan stop words bahasa Indonesia dihilangkan dengan Sastrawi, lalu diubah menjadi vektor TF-IDF untuk merepresentasikan kepentingan kata. Cosine Similarity menghitung kesamaan antar destinasi berdasarkan vektor ini, menghasilkan matriks kesamaan. Fungsi get_content_recommendations mengambil Place_Id, mengurutkan destinasi berdasarkan skor kesamaan, dan mengembalikan 5 destinasi teratas (kecuali diri sendiri) dengan detail seperti Place_Name, Category, Rating, Price, dan Similarity_Score, memungkinkan rekomendasi berbasis konten yang relevan meskipun akurasi terbatas oleh kualitas deskripsi. <br>
 
 #### Code Inference
+##### Percobaan Inference Pertama
 ```
-get_content_recommendations(210)
+# Contoh penggunaan
+place_id = 210  # Misalnya, Pantai Congot
+recommendations = get_content_recommendations(place_id)
+print(f"Rekomendasi untuk Place_Id={place_id} ({point[point['Place_Id'] == place_id]['Place_Name'].iloc[0]}):")
+print(recommendations.to_string(index=False))
+```
+##### Percobaaan Inference Kedua
+```
+# Contoh penggunaan
+place_id = 179  # Misalnya, Pantai Congot
+recommendations = get_content_recommendations(place_id)
+print(f"Rekomendasi untuk Place_Id={place_id} ({point[point['Place_Id'] == place_id]['Place_Name'].iloc[0]}):")
+print(recommendations.to_string(index=False))
 ```
 Penjelasan : <br>
-Kode tersebut berfungsi untuk memberikan rekomendasi tempat wisata bagi pengguna berdasarkan model prediktif yang telah dilatih sebelumnya. Pertama, kode meminta input berupa User ID, lalu memverifikasi apakah ID tersebut valid dan terdapat dalam data. Setelah itu, sistem mengidentifikasi tempat yang belum dikunjungi oleh user dan memprediksi tingkat ketertarikan user terhadap tempat-tempat tersebut menggunakan model, lalu memilih 7 tempat dengan prediksi tertinggi sebagai rekomendasi. Selain itu, kode juga menampilkan 5 tempat yang paling disukai user berdasarkan rating sebelumnya. Semua hasil ditampilkan dalam bentuk tabel yang rapi menggunakan library tabulate.
+Kode ini menunjukkan bagaimana fungsi get_content_recommendations dijalankan untuk menghasilkan rekomendasi destinasi wisata berdasarkan Content-Based Filtering. Dengan mengatur place_id = 179 atau lainnya (misalnya, Taman Sungai Mudal, bukan Pantai Congot seperti yang salah disebut di komentar), kode memanggil fungsi untuk mendapatkan 5 destinasi paling mirip berdasarkan Cosine Similarity dari vektor TF-IDF yang dibuat dari teks Description dan Category. Fungsi mengembalikan DataFrame recommendations berisi kolom Place_Id, Place_Name, Category, Rating, Price, dan Similarity_Score. Pernyataan print menampilkan nama destinasi acuan (diambil dari point menggunakan Place_Id) dan daftar rekomendasi dalam format teks rapi tanpa indeks, memungkinkan pengguna melihat destinasi serupa dengan skor kesamaan tertinggi secara langsung.
 
 Output : <br>
 <img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
