@@ -338,6 +338,8 @@ Berdasarkan hasil pengujian sistem Collaborative Filtering untuk user dengan ID 
 Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kategori beragam seperti Cagar Alam, Budaya, dan Bahari, dengan rating tinggi (≥4.2) dan harga yang relatif terjangkau. Sistem kemudian merekomendasikan 7 tempat yang belum dikunjungi, yang secara pola serupa dengan preferensi sebelumnya—kategori Cagar Alam dan Bahari masih mendominasi, serta harga tetap terjaga dalam rentang murah sampai sedang. Ini menunjukkan bahwa model dapat menangkap pola kesukaan pengguna berdasarkan interaksi historis pengguna lain yang memiliki kesamaan selera, dan memberikan rekomendasi yang masuk akal serta relevan. Secara keseluruhan, sistem bekerja baik dalam menyarankan destinasi wisata yang sesuai dengan preferensi user.  <br>
 
 ### Content Based Filtering
+
+
 #### Fungsi Rekomendasi
 ```
 import re
@@ -399,6 +401,23 @@ def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
 Penjelasan : <br>
 Fungsi ini merekomendasikan destinasi wisata dengan mengolah teks dari kolom Description dan Category di DataFrame point menggunakan TF-IDF Vectorizer dan Cosine Similarity. Pertama, teks digabung, dibersihkan (huruf kecil, hapus tanda baca), dan stop words bahasa Indonesia dihilangkan dengan Sastrawi, lalu diubah menjadi vektor TF-IDF untuk merepresentasikan kepentingan kata. Cosine Similarity menghitung kesamaan antar destinasi berdasarkan vektor ini, menghasilkan matriks kesamaan. Fungsi get_content_recommendations mengambil Place_Id, mengurutkan destinasi berdasarkan skor kesamaan, dan mengembalikan 5 destinasi teratas (kecuali diri sendiri) dengan detail seperti Place_Name, Category, Rating, Price, dan Similarity_Score, memungkinkan rekomendasi berbasis konten yang relevan meskipun akurasi terbatas oleh kualitas deskripsi. <br>
 
+#### Melihat ukuran dari cosine, baris, dan key sampel
+```
+print(f"Ukuran cosine_sim: {cosine_sim.shape}")
+print(f"Jumlah baris point: {len(point)}")
+print(f"Indices keys example: {list(indices.keys())[:10]}")
+print(f"indices[{179}]: {indices.get(179)}")
+```
+Output : <br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ukcosim.jpg"><br>
+
+#### Melihat key yang dapat diujikan
+```
+print(point['Place_Id'].unique())
+```
+#### Bentuk key data yang dapat diujikan
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/rawdata.jpg"><br>
+
 #### Code Inference
 ##### Percobaan Inference Pertama
 ```
@@ -420,7 +439,10 @@ Penjelasan : <br>
 Kode ini menunjukkan bagaimana fungsi get_content_recommendations dijalankan untuk menghasilkan rekomendasi destinasi wisata berdasarkan Content-Based Filtering. Dengan mengatur place_id = 179 atau lainnya (misalnya, Taman Sungai Mudal, bukan Pantai Congot seperti yang salah disebut di komentar), kode memanggil fungsi untuk mendapatkan 5 destinasi paling mirip berdasarkan Cosine Similarity dari vektor TF-IDF yang dibuat dari teks Description dan Category. Fungsi mengembalikan DataFrame recommendations berisi kolom Place_Id, Place_Name, Category, Rating, Price, dan Similarity_Score. Pernyataan print menampilkan nama destinasi acuan (diambil dari point menggunakan Place_Id) dan daftar rekomendasi dalam format teks rapi tanpa indeks, memungkinkan pengguna melihat destinasi serupa dengan skor kesamaan tertinggi secara langsung.
 
 Output : <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
+- Percobaan Pertama
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/ujicbf1.jpg"><br>
+- Percobaan Kedua
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/ujicbf2.jpg"><br>
 Interpretasi : <br> 
 Berdasarkan hasil pengujian sistem Content-Based Filtering untuk index ke-210, sistem merekomendasikan lima tempat wisata dengan kategori Bahari yang berlokasi di Yogyakarta, dan memiliki rating tinggi (≥4.0) serta harga seragam (mayoritas Rp10.000). Rekomendasi ini disusun berdasarkan kemiripan fitur konten seperti kategori, deskripsi, dan lokasi dari tempat yang menjadi acuan utama di index 210. Misalnya, tempat seperti Pantai Timang (rating 4.7) dan Pantai Watu Kodok (rating 4.6) muncul karena memiliki karakteristik serupa dengan destinasi yang menjadi basis pencarian (yaitu sesama pantai dengan tema bahari, di wilayah yang sama, dan memiliki ulasan baik). Ini menunjukkan bahwa sistem content-based dapat secara efektif mengenali dan merekomendasikan tempat wisata dengan fitur yang relevan berdasarkan preferensi eksplisit pengguna terhadap satu objek wisata tertentu. Secara keseluruhan pada model content based filtering, model berhasil memproses perintah dan berhasil memberikan output berupa rekomendasi kepada pengguna.
 
@@ -433,26 +455,7 @@ Penjelasan : <br>
 Berdasarkan grafik dan log pelatihan yang ditampilkan, model menunjukkan penurunan RMSE (Root Mean Squared Error) secara konsisten pada data pelatihan dari sekitar 0.3496 ke 0.3492 selama 50 epoch, sementara RMSE pada data validasi cenderung stagnan di sekitar 0.3493. Meskipun nilai RMSE pelatihan terus menurun, penurunan tersebut sangat kecil, dan tidak diikuti oleh peningkatan performa pada data validasi, yang menunjukkan bahwa model mungkin mulai mengalami overfitting ringan atau bahwa model telah mencapai batas kemampuannya dalam mempelajari pola dari data. Hal ini diperkuat oleh log epoch yang menunjukkan bahwa mulai dari epoch ke-33 hingga ke-50, nilai val_root_mean_squared_error tetap berada pada angka 0.3493 tanpa perubahan berarti, menunjukkan bahwa model tidak lagi belajar hal baru yang berdampak terhadap generalisasi.
 
 ### Content Based Filtering
-#### Melihat ukuran dari cosine, baris, dan key sampel
-```
-print(f"Ukuran cosine_sim: {cosine_sim.shape}")
-print(f"Jumlah baris point: {len(point)}")
-print(f"Indices keys example: {list(indices.keys())[:10]}")
-print(f"indices[{179}]: {indices.get(179)}")
-```
-Output : <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ukcosim.jpg"><br>
-
-#### Melihat key yang dapat diujikan
-```
-print(point['Place_Id'].unique())
-```
-#### Bentuk key data yang dapat diujikan
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/rawdata.jpg"><br>
-
-#### Kaitannya dengan hasil simulasi
-Contoh bentuk hasil simulasi <br>
-<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/7943c2f60bf45068be0aecc9d812ce514b360393/img/ujicontentbased.jpg"><br>
+<img src="https://github.com/habibarrsyd/Model_Rekomendasi_Tempat_WIsata/blob/9852ddfa6a5c99f86c87abd696873cf8bb7fe8f2/img/evaluasicbf.jpg"><br>
 Terlihat bahwa model cukup bisa merepresentasikan hasil rekomendasi terlihat bahwa gambar diatas adalah hasil pengujian terhadap keys ke 210. Dari hasil yang ditampilkan terlihat bahwa jika melihat dari raw data nya pada keys ke 210 menunjukkan bahwa destinasi nya adalah Pantai Congot dimana menunjukkan kategori Bahari kemudian dari hasil rekomendasinya masih sangat relevan karena berhasil memberikan rekomendasi sesuai kategori yaitu Bahari dimana terlihat ada 5 Pantai yang berhasil direkomendasikan.
 
 ## Kesimpulan
