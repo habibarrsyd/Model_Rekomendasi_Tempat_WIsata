@@ -437,7 +437,7 @@ sistem Content-Based Filtering menunjukkan performa yang konsisten dalam merekom
 <img src="img/evalrmse2.jpg"><br>
 <img src="img/grafikrmse2.jpg"><br>
 Penjelasan : <br>
-Berdasarkan grafik dan log pelatihan yang ditampilkan menunjukkan bahwa sistem berhasil melatih model dengan performa yang baik, sebagaimana terlihat dari penurunan RMSE pada data latih dari 0,3498 menjadi 0,3464 selama 50 epoch, sementara RMSE validasi tetap stabil di sekitar 0,3509, mengindikasikan model tidak mengalami overfitting dan cukup generalisasi terhadap data baru. Hasil rekomendasi yang diberikan, seperti Bukit Bintang Yogyakarta dan Desa Wisata Tembi, mencerminkan preferensi pengguna berdasarkan tempat yang pernah disukai (rating 4.3-4.5, harga variatif), dengan rekomendasi yang memiliki rating tinggi (4-4.5) dan harga terjangkau (0-25.000), menunjukkan bahwa model efektif dalam menangkap pola preferensi pengguna meskipun ada variasi kategori seperti taman hiburan, cagar alam, dan bahari.
+Berdasarkan grafik dan log pelatihan yang ditampilkan menunjukkan bahwa sistem berhasil melatih model dengan performa yang baik, sebagaimana terlihat dari penurunan RMSE pada data latih dari 0,3498 menjadi sekitar 0,3494 selama 50 epoch pada visualisasi grafik, sementara RMSE validasi tetap stabil di sekitar 0,3509, mengindikasikan model tidak mengalami overfitting dan cukup generalisasi terhadap data baru. 
 
 ### Content Based Filtering
 <img src="img/evaluasicbf.jpg"><br>
