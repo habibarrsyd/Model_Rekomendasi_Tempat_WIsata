@@ -230,11 +230,10 @@ stopword_factory = StopWordRemoverFactory()
 stop_words = stopword_factory.get_stop_words()
 tfidf = TfidfVectorizer(stop_words=stop_words)
 tfidf_matrix = tfidf.fit_transform(descriptions)
-cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 ```
 Penjelasan : <br>
 
-Kode ini bekerja dengan mengolah teks dari DataFrame point untuk membangun sistem Content-Based Filtering berbasis kesamaan teks, dimulai dengan fungsi preprocess_text yang mengubah teks menjadi huruf kecil dan menghapus tanda baca menggunakan regular expression untuk memastikan konsistensi dan menghilangkan noise. Selanjutnya, kolom Description dan Category digabungkan menjadi combined_features, mengganti nilai kosong dengan string kosong, lalu diproses ulang dengan preprocess_text untuk menghasilkan descriptions yang bersih. Bagian vektorisasi menggunakan TfidfVectorizer dengan stop words bahasa Indonesia dari Sastrawi untuk mengabaikan kata-kata umum, mengubah teks menjadi matriks TF-IDF (tfidf_matrix) yang mencerminkan bobot kata berdasarkan frekuensi dan kelangkaan, dan akhirnya cosine_similarity menghitung matriks kesamaan kosinus antara semua destinasi untuk mengukur tingkat kemiripan konten, menjadi dasar rekomendasi selanjutnya. <br>
+Kode ini bekerja dengan mengolah teks dari DataFrame point untuk membangun sistem Content-Based Filtering berbasis kesamaan teks, dimulai dengan fungsi preprocess_text yang mengubah teks menjadi huruf kecil dan menghapus tanda baca menggunakan regular expression untuk memastikan konsistensi dan menghilangkan noise. Selanjutnya, kolom Description dan Category digabungkan menjadi combined_features, mengganti nilai kosong dengan string kosong, lalu diproses ulang dengan preprocess_text untuk menghasilkan descriptions yang bersih. Bagian vektorisasi menggunakan TfidfVectorizer dengan stop words bahasa Indonesia dari Sastrawi untuk mengabaikan kata-kata umum, mengubah teks menjadi matriks TF-IDF (tfidf_matrix) yang mencerminkan bobot kata berdasarkan frekuensi dan kelangkaan. <br>
 
 
 ## Modelling
@@ -336,12 +335,13 @@ recommended_table = [
 ]
 print("\nRekomendasi Tempat:")
 print(tabulate(recommended_table, headers=["#", "Nama Tempat", "Kategori", "Rating", "Harga"], tablefmt="fancy_grid"))
+
 ```
 Penjelasan : <br>
 Kode diatas berbasis model prediktif yang menerima input User ID dari pengguna, lalu mencari tempat-tempat yang belum dikunjungi oleh user tersebut. Pertama, kode memvalidasi keberadaan User ID dalam data dan menyiapkan daftar tempat yang belum dikunjungi oleh user tersebut. Untuk setiap tempat yang belum dikunjungi, kode membentuk pasangan user-tempat lalu memprediksi rating menggunakan model yang sudah dilatih sebelumnya. Setelah itu, sistem memilih 7 tempat dengan rating tertinggi sebagai rekomendasi dan menampilkannya dalam bentuk tabel menggunakan pustaka tabulate. Selain itu, kode juga menampilkan 5 tempat yang paling disukai oleh user berdasarkan rating sebelumnya untuk konteks tambahan terhadap preferensi pengguna.
 
 Output : <br> 
-<img src="img/ujicolaboratiffilter.jpg"><br>
+<img src="img/ujicolaboratif2.jpg"><br>
 Interpretasi : <br> 
 Berdasarkan hasil pengujian sistem Collaborative Filtering untuk user dengan ID 200, sistem berhasil menampilkan dua bagian utama: (1) Tempat yang Pernah Disukai, dan (2) Rekomendasi Tempat. Pada bagian pertama, terlihat bahwa user 200 menyukai tempat-tempat dengan kategori beragam seperti Cagar Alam, Budaya, dan Bahari, dengan rating tinggi (≥4.2) dan harga yang relatif terjangkau. Sistem kemudian merekomendasikan 7 tempat yang belum dikunjungi, yang secara pola serupa dengan preferensi sebelumnya—kategori Cagar Alam dan Bahari masih mendominasi, serta harga tetap terjaga dalam rentang murah sampai sedang. Ini menunjukkan bahwa model dapat menangkap pola kesukaan pengguna berdasarkan interaksi historis pengguna lain yang memiliki kesamaan selera, dan memberikan rekomendasi yang masuk akal serta relevan. Secara keseluruhan, sistem bekerja baik dalam menyarankan destinasi wisata yang sesuai dengan preferensi user.  <br>
 
@@ -350,6 +350,7 @@ Berdasarkan hasil pengujian sistem Collaborative Filtering untuk user dengan ID 
 
 #### Fungsi Rekomendasi
 ```
+cosine_sim = cosine_similarity(tfidf_matrix, tfidf_matrix)
 def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
     """
     Mengembalikan top_n destinasi paling relevan berdasarkan kesamaan Cosine Similarity.
@@ -384,17 +385,16 @@ def get_content_recommendations(place_id, cosine_sim=cosine_sim, top_n=5):
     return result
 ```
 Penjelasan : <br>
-Fungsi get_content_recommendations bekerja untuk menghasilkan rekomendasi destinasi wisata berdasarkan kesamaan Cosine Similarity dengan mengambil place_id sebagai acuan, memanfaatkan matriks kesamaan cosine_sim yang sudah dihitung sebelumnya dan parameter top_n (default 5) untuk menentukan jumlah rekomendasi, dimulai dengan validasi bahwa place_id ada dalam indices, jika tidak akan memunculkan error. Fungsi kemudian mengambil indeks destinasi acuan dari indices, mengakses baris terkait dari cosine_sim untuk mendapatkan semua skor kesamaan dengan destinasi lain, mengubahnya menjadi daftar tuple (indeks, skor) yang diurutkan secara menurun berdasarkan skor, dan memilih top_n destinasi teratas dengan melewati indeks diri sendiri menggunakan sim_scores[1:top_n+1]. Indeks destinasi yang dipilih diekstrak ke place_indices, digunakan untuk mengambil data dari DataFrame point dengan kolom Place_Id, Place_Name, Category, Rating, dan Price, lalu kolom Similarity_Score ditambahkan berdasarkan skor kesamaan, menghasilkan DataFrame yang dikembalikan sebagai rekomendasi terurut berdasarkan relevansi. <br>
+Cosine_similarity menghitung matriks kesamaan kosinus antara semua destinasi untuk mengukur tingkat kemiripan konten, menjadi dasar rekomendasi. Fungsi get_content_recommendations bekerja untuk menghasilkan rekomendasi destinasi wisata berdasarkan kesamaan Cosine Similarity dengan mengambil place_id sebagai acuan, memanfaatkan matriks kesamaan cosine_sim yang sudah dihitung sebelumnya dan parameter top_n (default 5) untuk menentukan jumlah rekomendasi, dimulai dengan validasi bahwa place_id ada dalam indices, jika tidak akan memunculkan error. Fungsi kemudian mengambil indeks destinasi acuan dari indices, mengakses baris terkait dari cosine_sim untuk mendapatkan semua skor kesamaan dengan destinasi lain, mengubahnya menjadi daftar tuple (indeks, skor) yang diurutkan secara menurun berdasarkan skor, dan memilih top_n destinasi teratas dengan melewati indeks diri sendiri menggunakan sim_scores[1:top_n+1]. Indeks destinasi yang dipilih diekstrak ke place_indices, digunakan untuk mengambil data dari DataFrame point dengan kolom Place_Id, Place_Name, Category, Rating, dan Price, lalu kolom Similarity_Score ditambahkan berdasarkan skor kesamaan, menghasilkan DataFrame yang dikembalikan sebagai rekomendasi terurut berdasarkan relevansi. <br>
 
-#### Melihat ukuran dari cosine, baris, dan key sampel
+#### Melihat ukuran baris, dan key sampel
 ```
-print(f"Ukuran cosine_sim: {cosine_sim.shape}")
 print(f"Jumlah baris point: {len(point)}")
 print(f"Indices keys example: {list(indices.keys())[:10]}")
 print(f"indices[{179}]: {indices.get(179)}")
 ```
 Output : <br>
-<img src="img/ukcosim.jpg"><br>
+<img src="img/ukshape.jpg"><br>
 
 #### Melihat key yang dapat diujikan
 ```
@@ -434,10 +434,10 @@ sistem Content-Based Filtering menunjukkan performa yang konsisten dalam merekom
 
 ## Evaluasi
 ### Collaborative Filtering
-<img src="img/hasilepoch.jpg"><br>
-<img src="img/grafikrmse.jpg"><br>
+<img src="img/evalrmse2.jpg"><br>
+<img src="img/grafikrmse2.jpg"><br>
 Penjelasan : <br>
-Berdasarkan grafik dan log pelatihan yang ditampilkan, model menunjukkan penurunan RMSE (Root Mean Squared Error) secara konsisten pada data pelatihan dari sekitar 0.3496 ke 0.3499 selama 50 epoch, sementara RMSE pada data validasi cenderung stagnan di sekitar 0.3493. Meskipun nilai RMSE pelatihan terus menurun, penurunan tersebut sangat kecil, dan tidak diikuti oleh peningkatan performa pada data validasi, yang menunjukkan bahwa model mungkin mulai mengalami overfitting ringan atau bahwa model telah mencapai batas kemampuannya dalam mempelajari pola dari data. Hal ini diperkuat oleh log epoch yang menunjukkan bahwa mulai dari epoch ke-33 hingga ke-50, nilai val_root_mean_squared_error tetap berada pada angka 0.3493 tanpa perubahan berarti, menunjukkan bahwa model tidak lagi belajar hal baru yang berdampak terhadap generalisasi.
+Berdasarkan grafik dan log pelatihan yang ditampilkan, model menunjukkan penurunan RMSE (Root Mean Squared Error) secara konsisten pada data pelatihan dari sekitar 0.3496 ke 0.3492 selama 50 epoch, sementara RMSE pada data validasi cenderung stagnan di sekitar 0.3499. Meskipun nilai RMSE pelatihan terus menurun, penurunan tersebut sangat kecil, dan tidak diikuti oleh peningkatan performa pada data validasi, yang menunjukkan bahwa model mungkin mulai mengalami overfitting ringan atau bahwa model telah mencapai batas kemampuannya dalam mempelajari pola dari data. Hal ini diperkuat oleh log epoch yang menunjukkan bahwa mulai dari epoch ke-33 hingga ke-50, nilai val_root_mean_squared_error tetap berada pada angka 0.3499 tanpa perubahan berarti, menunjukkan bahwa model tidak lagi belajar hal baru yang berdampak terhadap generalisasi.
 
 ### Content Based Filtering
 <img src="img/evaluasicbf.jpg"><br>
